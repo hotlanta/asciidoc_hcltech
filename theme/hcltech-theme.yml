@@ -1,0 +1,85 @@
+# TODO: Try to adjust to produce documents that looks HCLTech User Documentation templates
+
+
+brand: 
+  green_color: #01A982
+  white_color: #FFFFFF
+  black_color: #00000
+  grey1_color: #C6C9CA
+
+font:
+  catalog:
+    Metric:
+      normal: arial.ttf
+      italic: ariali.ttf.ttf
+      bold: arialbd.ttf.ttf
+      bold_italic: arialbi.ttf.ttf
+    Arial:
+      normal: arial.ttf
+      italic: ariali.ttf
+      bold: arialbd.ttf
+      bold_italic: arialbi.ttf
+  fallbacks: [Arial]
+      
+title_page:
+  align: left
+  background_image: image:hpe_title.png[fit=none,pdfwidth=100%,position=top]
+  title_top: 50%
+  title_font_size: 28
+  title_font_style: bold
+  subtitle_font_size: 28
+  subtitle_line_height: 2
+
+page:
+  layout: portrait
+  #margin: [2.3in, 0.51in, 1.2in, 1.75in] # XXX: Margins from the HPE technical template, Oh, it's so ugly.
+  margin: [0.75in, 1in, 0.75in, 1in]
+  size: A4
+
+base:
+  font_color: #333333
+  font_family: Arial
+  font_size: 11
+  line_height_length: 17
+  line_height: $base_line_height_length / $base_font_size
+
+vertical_rhythm: $base_line_height_length
+
+heading:
+  font_color: #262626
+  font_size: 24
+  font_style: bold
+  line_height: 1.2
+  margin_bottom: $vertical_rhythm
+
+link:
+  font_color: $brand_green_color
+
+outline_list:
+  indent: $base_font_size * 1.5
+
+header:
+  height: 0.75in
+  line_height: 1
+  recto_right:
+    content: '{section-or-chapter-title} | *{page-number}*'
+  verso_right:
+    content: $header_recto_right_content
+
+table:
+    border_color: $brand_green_color
+    head_background_color: $brand_grey1_color
+    header_cell_background_color: $brand_grey1_color
+ 
+example:
+    border_color: $brand_green_color
+
+caption:
+  font_style: bold
+
+code:
+    border_color: $brand_grey1_color
+    background_color: $brand_grey1_color
+    
+admonition:
+    column_rule_color: $brand_green_color

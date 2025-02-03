@@ -1,0 +1,1436 @@
+= HPE eIUM Release Notes: eIUM 10.6.3 Patch eIUM10.6.3.20211027-1641
+:revnumber: HPE eIUM 10.6.3 
+:revdate: October 27, 2021 
+:version-label!:
+:doctype: book
+:icon: font
+:toc: left
+:toclevels: 5
+:sectnums:
+:sectnumlevels: 5
+:numbered:
+:sectlinks:
+:linkcss:
+:stylesdir: d:\GitHub_documentation\cms-techdocs-deg\eIUM_ReleaseNotes\asciidoctor\stylesheets\
+:stylesheet: hpe_theme_custom.css
+:product_name: HPE eIUM
+
+[preface]
+== Notices
+
+=== Legal notice
+
+© Copyright 2012–2021 Hewlett Packard Enterprise Development LP
+
+Confidential computer software. Valid license from HPE required for possession, use or copying. Consistent with FAR 12.211 and 12.212, Commercial Computer Software, Computer Software Documentation, and Technical Data for Commercial Items are licensed to the U.S. Government under vendor's standard commercial license.
+
+The information contained herein is subject to change without notice. The only warranties for HPE products and services are set forth in the express warranty statements accompanying such products and services. Nothing herein should be construed as constituting an additional warranty. HPE shall not be liable for technical or editorial errors or omissions contained herein.
+
+=== Trademarks
+
+Oracle and Java are registered trademarks of Oracle and/or its
+affiliates.+
+UNIX is a registered trademark of The Open Group+
+Intel and Itanium are registered trademarks of Intel Corporation in the US and other countries and are used under license. +
+Linux is a registered trademark of Linus Torvalds in the United States. +
+Red Hat and Enterprise Linux are registered trademarks of RedHat, Inc. +
+Microsoft and Windows are U.S. registered trademarks of Microsoft Corporation.
+
+All other trademarks are the property of their respective owners.
+
+== Introduction
+
+This cumulative patch includes several important fixes to eIUM, which were introduced into the product since the last cumulative patch or release. These fixes repair critical defects and they are essential to the proper operation of eIUM. Fixes to defects that are not urgent or critical are planned for a subsequent release.
+
+This is a combined eIUM patch, and contains updates to the following product components:
+
+* Cloud Interconnect Server
+* Extended Tools
+* IUM
+* License Server
+* Security Server
+
+It could be installed on any type of eIUM host (Standard, Client, Bare) with any combination of installed product extensions (MySQL, Real-Time Engine, ExtendedTools, or others). Only the aspects applicable to the specific host will be installed from this patch.
+
+This document provides instructions for installing the cumulative patch.
+It also includes a brief summary of each defect fixed in this patch. The
+defects are sorted in descending order by patch (most recent first) and
+by defect ID within each patch. Older defect IDs start with "QXCR" while
+newer IDs start with "CMSEIUM". Some defects have both IDs.
+
+____
+*NOTE*: A new license key is required for every major and minor release
+to install and upgrade eIUM. All Feature Pack releases are compatible
+with major/minor releases and do not require having a new license key.
+____
+
+You can uninstall or remove an eIUM patch that has been successfully installed. See the Uninstallation Procedure below for instructions. You can not use this method to remove a patch that failed to install correctly.
+
+As an HPE customer, you can obtain the most current software releases and documentation by contacting your HPE Sales representative or HPE Delivery contact. Or, you can open a support case by e-mail to request assistance: iumsupport@hpe.com.
+
+==  Container Docker images
+include::d:\GitHub_documentation\cms-techdocs-deg\eIUM_ReleaseNotes\container_docker_image.adoc[]
+
+== Backward compatibility
+
+* <<CMSEIUM-21409>> -- Management Server does not gather TPS audit and throughput statistics when TPSAudit is off in the license. Prior this version Management Severer was gathering these statistics regardless of license type.
+
+== Installation Procedure
+
+____
+*Note* You must install this patch on the host running the
+Configuration Server first and on other hosts afterwards. This order of installation is essential.*
+____
+
+. Log in as the Administrator or the root user. If you installed eIUM on UNIX using a non-root user, then log in as that non-root user.
+. Back up your configuration. You can use the `saveconfig` command to save the configuration into a file as follows:
++
+....
+saveconfig -f backup20211027-1641.config
+....
++
+See the eIUM Command Reference for more information on the `saveconfig` command.
+. Copy the patch installation file to a temporary location such as `/tmp/eIUM10.6.3.20211027-1641.patch` or  `C:\temp\eIUM10.6.3.20211027-1641.patch`.
++
+*Note* Ensure that you execute the patch installation in a directory whose name _does not_ have any non-Latin characters (for example, such as those from Russian, Chinese, or Japanese). Patch installation could otherwise fail in such a case.
+. Optionally, verify the signature of the patch installation file by
+executing the following `jarsigner` (JAR Signing and Verification)
+command. Though not required for installation of this patch, you can
+execute this command to verify that the patch file is genuinely from
+HPE, and to ensure it has not been modified since it was signed by HPE:
++
+....
+jarsigner -verify -verbose -certs eIUM10.6.3.20211027-1641.patch
+....
+. Ensure that the host admin agent is running. The patch will not
+install properly without it. See the eIUM Administrator's Guide for more
+information on the host admin agent.
+. Close all running application sessions (such as LaunchPad, eIUM
+Studio, or the ConfigEditor) before starting the upgrade.
+. Execute one of the patch installation commands below.
++
+*Note* - You must use the java command, not the SIUJava command. The last parameter in the command is the directory of the eIUM instance to be patched.
+
+* If security is not installed:
++
+....
+java -jar eIUM10.6.3.20211027-1641.patch /opt/SIU
+....
++
+or
++
+....
+java -jar eIUM10.6.3.20211027-1641.patch C:\SIU
+....
+* If security is installed:
++
+....
+java -jar eIUM10.6.3.20211027-1641.patch -login <user> -pw <password> /opt/SIU
+....
++
+or
++
+....
+java -jar eIUM10.6.3.20211027-1641.patch -login <user> -pw <password> C:\SIU
+....
++
+*Note* - In order to execute the above java commands, the first "java"
+in the PATH must be at least JDK 11.0 or later, OR you should specify
+the full path to the correct java executable. For example:
++
+....
+/opt/jdk11.0.2/bin/java -jar eIUM10.6.3.20211027-1641.patch /opt/SIU
+....
++
+You should see output lines like the following:
++
+....
+Configuring patch eIUM10.6.3.20211027-1641
+Processing command line args
+...
+Collecting system information
+...
+Verifying patch environment
+...
+All verifications passed, starting patch install
+...
+Installing patched files
+...
+Preparing configuration for patch uninstallation
+...
+Cleaning up after installation
+...
+-----------------------------------------------------------------------------
+Patch installation completed successfully
+-----------------------------------------------------------------------------
+You must restart any eIUM processes for the changes to take effect
+-----------------------------------------------------------------------------
+....
+
+. Restart the host admin agent. See the eIUM Administrator's Guide for
+instructions.
++
+*Note* - If an error message indicates that the installation failed,
+examine the log file `eIUM10.6.3_install.log` in the current directory
+for details. This log file also contains a list of the files installed.
+. Verify that the patch was installed correctly by checking eIUM log
+files, such as the host log file, the configuration server log file, or
+any collector log file.
++
+[cols=",,",]
+|===
+| |Host Log File |Configuration Server Log File
+
+|Windows |`C:\SIU\var\log\hostname.log`
+|`C:\SIU\var\log\ConfigServer.log`
+
+|UNIX |`/var/opt/SIU/log/hostname.log`
+|`/var/opt/SIU/log/ConfigServer.log`
+|===
++
+Look for a "`eIUM10.6.3.20211027-1641`" string in these log files. For
+patched eIUM jar files, you should see output similar to the following
+line:
++
+....
+... main (02.007.03) INFORMATIVE: * Build ID: patch eIUM10.6.3.20211027-1641
+....
++
+For patched eIUM plug-ins you should see output similar to the following
+line:
++
+....
+... main (39.009.03) INFORMATIVE: Detected Plugin: ... version ... patch eIUM10.6.3.20211027-1641
+....
+
+== Uninstallation Procedure
+
+____
+*Note* - You must restore your eIUM environment to the state it was in
+before you installed this patch. If your collectors use features in the
+patch and you remove the patch, those collectors will not run properly.
+Contact eIUM support for assistance with restoring your eIUM environment
+or removing this patch.*
+____
+
+. Log in as the Administrator or the root user. If you installed eIUM on
+UNIX using a non-root user, then log in as that non-root user.
+. Ensure that the host admin agent is running. The patch will not
+uninstall properly without it. See the eIUM Administrator's Guide for
+more information on the host admin agent.
+. Close all running application sessions (such as LaunchPad, eIUM
+Studio, or the ConfigEditor) before executing the uninstall.
+. Back up your configuration. You can use the `saveconfig` command to
+save the configuration into a file as follows:
++
+....
+saveconfig -f backup20211027-1641.config
+....
++
+See the eIUM Command Reference for more information on the `saveconfig`
+command.
+. Change your working directory to the patch backup directory for the
+current patch. This directory is located under VARROOT (for example,
+`/var/opt/SIU` or `C:\SIU\var`) at
+`VARROOT/patch_backup/eIUM10.6.3.20211027-1641` or
+`VARROOT\patch_backup\eIUM10.6.3.20211027-1641`.
+. Execute one of the commands below to start the patch uninstall
+process.
++
+*Note* - Patch uninstall uses the java command, not SIUJava.
+
+* If security is not installed:
++
+....
+java -jar UninstallPatch.jar
+....
+* If security is installed:
++
+....
+java -jar UninstallPatch.jar -login <user> -pw <password>
+....
++
+*Note* - In order to execute the above java commands, the first "java"
+in the PATH must be at least JDK 11.0 or later, OR you should specify
+the full path to the correct java executable. For example:
++
+....
+/opt/jdk11.0.2/bin/java -jar UninstallPatch.jar
+....
++
+You should see output like the following:
++
+....
+Configuring patch eIUM10.6.3.20211027-1641 for uninstall
+Processing command line args
+...
+Collecting system information
+...
+Configuring patch modules
+...
+Verifying patch environment
+...
+All verifications passed, starting patch uninstall
+...
+Restoring patched files
+...
+Cleaning up patch uninstall
+...
+-----------------------------------------------------------------------------
+Patch uninstallation completed successfully
+-----------------------------------------------------------------------------
+You must restart any eIUM processes for the changes to take effect
+-----------------------------------------------------------------------------
+You should check .../eIUM10.6.3.20211027-1641/eIUM10.6.3_uninstall.log for errors,
+  then remove the patch backup directory '.../patch_backup/eIUM10.6.3.20211027-1641'
+-----------------------------------------------------------------------------
+....
+. Restart the host admin agent to apply the changes. See the eIUM
+Administrator's Guide for instructions.
++
+If an error message indicates that the uninstall failed, examine the log
+file `eIUM10.6.3_uninstall.log` in the current directory for details.
+This log file also contains a list of the files restored by the
+uninstall.
+. Verify that the patch was uninstalled correctly by checking eIUM log
+files, such as the host log file, the configuration server log file, or
+any collector log file.
++
+[cols=",,",]
+|===
+| |Host Log File |Configuration Server Log File
+
+|Windows |`C:\SIU\var\log\hostname.log`
+|`C:\SIU\var\log\ConfigServer.log`
+
+|UNIX |`/var/opt/SIU/log/hostname.log`
+|`/var/opt/SIU/log/ConfigServer.log`
+|===
++
+You should no longer see references to "`eIUM10.6.3.20211027-1641`" in
+those log files after Admin Agent restart.
++
+If there was a previous eIUM patch installed, you should see output
+similar to the following lines with the `<PriorPatch>` and
+`<PriorPatchVersion>` indicating the prior patch, not `eIUM10.6.3`:
++
+....
+... main (02.007.03) INFORMATIVE: * Build ID: patch <PriorPatch>.<PriorPatchVersion>
+....
++
+or
++
+....
+... main (39.009.03) INFORMATIVE: Detected Plugin: ... version ... patch <PriorPatch>.<PriorPatchVersion>
+....
++
+If there was no previously installed eIUM patch, you should not see
+lines like the above at all.
+
+== Cumulative Patch ID: 20211027-1641
+
+=== Enhancements
+
+[[QXCR1001535775]]
+*ID:* QXCR1001535775
+
+*Symptoms:*
+
+The RetryLimit and RetryTimeout attributes were not exposed in
+JobReceiverFileRollPolicy.
+
+*Resolution:*
+
+RetryLimit and RetryTimeout attributes are now exposed. See the HPE eIUM
+Component Reference for more information.
+
+Impacted components: JobReceiverFileRollPolicy
+
+[#CMSEIUM-21409]
+*ID:* CMSEIUM-21409
+
+*Description:*
+
+If TPSAudit is off in the license, ManagementServer does not gather and
+store TPS audit data by TPS_JOB and Throughput licensing by LM_JOB. If
+you do not need to collect TPS audit data in database, request the
+license with TPSAudit=false.
+
+Impacted components: ManagementServer
+
+[[CMSEIUM-21396]]
+*ID:* CMSEIUM-21396
+
+*Description:*
+
+The CouchbaseV3Cluster now supports disabling TLS hostname verification.
+
+The Couchbase 3.x SDK is now upgraded to 3.2.0.
+
+Impacted components: CouchbaseV3Cluster
+
+[[CMSEIUM-21015]]
+*ID:* CMSEIUM-21015
+
+*Description:*
+
+New delivery components, DeliveryVoltdb and VoltdbExternalSchema, have
+been introduced to store datasets received from the DeliveryAgent in a
+VoltDB database.
+
+Impacted components: VoltdbExternalSchema, DeliveryVoltdb
+
+[[CMSEIUM-21007]]
+*ID:* CMSEIUM-21007
+
+*Description:*
+
+User might provide externally-managed-network related input via the
+extManagedVirtualLinks attribute of the VNF instantiation request
+according to ETSI NFV-SOL 003 V2.7.1.
+
+Impacted components: CIS
+
+[[CMSEIUM-21006]]
+*ID:* CMSEIUM-21006
+
+*Description:*
+
+If required, CIS VNF LCM flow can merge new networking data and
+proprietary networking data from additional parameters to include
+OpenStack environment specific details in the request to VIM.
+
+Impacted components: CIS
+
+[[CMSEIUM-21005]]
+*ID:* CMSEIUM-21005
+
+*Description:*
+
+Users can provide network-related input via the extVirtualLinks
+attribute of the VNF instantiation request according to ETSI NFV-SOL 003
+V2.7.1.
+
+Impacted components: CIS
+
+[[CMSEIUM-21004]]
+*ID:* CMSEIUM-21004
+
+*Description:*
+
+CIS VNFD model has been extended to accommodate ETSI defined networking
+elements.
+
+Impacted components: CIS
+
+[[CMSEIUM-20974]]
+*ID:* CMSEIUM-20974
+
+*Description:*
+
+A new configuration attribute ResponseOptionalParameters has been
+introduced in DataSmOperation to fetch the data_sm_resp parameters back
+to NME.
+
+Impacted components: DataSmOperation
+
+[[CMSEIUM-20793]]
+*ID:* CMSEIUM-20793
+
+*Description:*
+
+New delivery components, DeliveryVoltdb and
+VoltdbStoredProcExternalSchema, have been introduced to store datasets
+received from the DeliveryAgent in a VoltDB database. The
+VoltdbStoredProcExternalSchema delegates the NMEs to a custom VoltDB
+stored procedure that inserts or updates records based on the custom
+aggregation steps.
+
+Impacted components: VoltdbStoredProcExternalSchema, DeliveryVoltdb
+
+=== Defects
+
+[[QXCR1001707319]]
+*ID:* QXCR1001707319
+
+*Symptoms:*
+
+A session server with the Load Balancer failed to connect to a backend
+server, if the backend server was identified through the host name
+instead of the IP address.
+
+*Resolution:*
+
+The Load Balancer has been fixed to work with host names, as well as IP
+addresses.
+
+Impacted components: Load Balancer
+
+[[QXCR1001540231]]
+*ID:* QXCR1001540231
+
+*Symptoms:*
+
+The DeliveryAgent and timeout threads were not exiting properly if there
+was an error while delivery and FailureAction was configured as
+STOP_COLLECTOR or STOP_DELIVERY.
+
+*Resolution:*
+
+The DeliveryAgent and timeout threads are now exiting properly for this
+scenario.
+
+Impacted components: DeliveryAgent
+
+[[CMSEIUM-21506]]
+*ID:* CMSEIUM-21506
+
+*Description:*
+
+Configure scripts execution has been restored during the ChangeVNFflavor
+operation.
+
+Impacted components: CIS
+
+[[CMSEIUM-21484]]
+*ID:* CMSEIUM-21484
+
+*Description:*
+
+The repository manager documentation has been updated, now it correctly
+shows that subsequent checkout is not required before checkin.
+
+Impacted components: Documentation
+
+[[CMSEIUM-21399]]
+*ID:* CMSEIUM-21399
+
+*Description:*
+
+The security server has been fixed to update the truststore information
+for the authorization server in the LDAP server correctly.
+
+Impacted components: Security server
+
+[[CMSEIUM-21380]]
+*ID:* CMSEIUM-21380
+
+*Description:*
+
+SMPPClientEndPoint has been fixed to execute DynamicEndPointSelector's
+AsyncRuleChainInvoker when ReconnectInterval is 0.
+
+Impacted components: SMPPClientEndPoint
+
+[[CMSEIUM-21340]]
+*ID:* CMSEIUM-21340
+
+*Description:*
+
+The Security server now can be successfully activated using Kerberos
+authentication.
+
+Impacted components: Security server
+
+[[CMSEIUM-21279]]
+*ID:* CMSEIUM-21279
+
+*Description:*
+
+Couchbase client library has been upgraded to version 2.7.21.
+
+Impacted Components: CouchbaseLoader, RefDataServiceManager
+
+[[CMSEIUM-21277]]
+*ID:* CMSEIUM-21277
+
+*Description:*
+
+The configuration exception now contains the hostname and port number.
+
+Impacted components: NMETrapRule
+
+[[CMSEIUM-21262]]
+*ID:* CMSEIUM-21262
+
+*Description:*
+
+The processmanager CLI is able to delete a server if it was configured
+with STARTUPMODE=Automatic. When a process with STARTUPMODE=Automatic is
+restarted by the admin agent, it can be removed using the processmanager
+delete command.
+
+Impacted components: CLI
+
+[[CMSEIUM-21245]]
+*ID:* CMSEIUM-21245
+
+*Description:*
+
+A timeout has been implemented for establishing connections from the
+Admin Agent to Management Server. The default timeout is 10 seconds; it
+can be changed by configuring the following system property:
+
+-Dcom.hp.usage.rpc.connect.timeout=<number of seconds>
+
+Impacted components: AdminAgent, ManagementServer
+
+[[CMSEIUM-21242]]
+*ID:* CMSEIUM-21242
+
+*Description:*
+
+DynamicThrottlingRule using LeakyBucketThrottlingMethod and very high
+throttling limits rejected NMEs due to arithmetic overflow. This has
+been fixed now.
+
+Impacted components: DynamicThrottlingRule
+
+[[CMSEIUM-21153]]
+*ID:* CMSEIUM-21153
+
+*Description:*
+
+Small changes have been introduced to avoid the Operations Console
+stalling on Chrome.
+
+New DEBUG log messages have been added to the Operations Console web
+application. To enable Operations Console DEBUG logging in
+var\webappserver\logs\web-console.log, change the .level=INFO to
+.level=DEBUG in the
+VARROT\webappserver\webapps\web-console\WEB-INF\logging.properties file
+and restart webapp server. 
+
+Impacted components: eIUM Operations Console
+
+[[CMSEIUM-21142]]
+*ID:* CMSEIUM-21142
+
+*Description:*
+
+SOAPContextProvider was failing to parse XML with xsi:nil for xs:int
+fields. It was failing with DecodeException/NumberFormatException. This
+has been fixed to parse the empty value and that particular SNME
+attribute will not be set in the SNME.
+
+Impacted components: SOAPContextProvider, XMLContextProvider,
+XMLResponseHandler, SOAPResponseHandler, XMLSNMEEncapsulator, and
+XMLDecoderFactory
+
+[[CMSEIUM-21104]]
+*ID:* CMSEIUM-21104
+
+*Description:*
+
+The security server is able to switch to LDAP server if the primary
+server is down while processing LDAP operation requests.
+
+Impacted components: Security Server
+
+[[CMSEIUM-21072]]
+*ID:* CMSEIUM-21072
+
+*Description:*
+
+In the Import function menu, the Import metadata checkbox is now not
+selected by default.
+
+Impacted components: Reference Data Manager
+
+[[CMSEIUM-21055]]
+*ID:* CMSEIUM-21055
+
+*Description:*
+
+In the eIUM Operations Console, the threshold could not be updated in
+DeploymentWide mode. This has been fixed now.
+
+Impacted components: eIUM Operations Console
+
+[[CMSEIUM-21054]]
+*ID:* CMSEIUM-21054
+
+*Description:*
+
+SplitURLRule is now able to handle LDAP URLs.
+
+Impacted components: SplitURLRule
+
+[[CMSEIUM-21045]]
+*ID:* CMSEIUM-21045
+
+*Description:*
+
+Permanent Redirect status response code feature has been added to
+HttpProtocol component.
+
+Impacted component: HttpProtocol
+
+[[CMSEIUM-21018]]
+*ID:* CMSEIUM-21018
+
+*Description:*
+
+SMSCConnector's ErrorCodeAttribute has been fixed to allow the
+DataRuleChain to set a custom command_status for the outgoing
+data_sm_resp.
+
+Impacted components: SMSCConnector
+
+[[CMSEIUM-20963]]
+*ID:* CMSEIUM-20963
+
+*Description:*
+
+The general IUM logging has been fixed to not synchronize for every log
+message.
+
+Impacted components: LogNMERule, IUM logging
+
+[[CMSEIUM-20961]]
+*ID:* CMSEIUM-20961
+
+*Description:*
+
+The NullPointerException has been fixed in the topology service.
+
+Impacted components: ConfigServer
+
+[[CMSEIUM-20959]]
+*ID:* CMSEIUM-20959
+
+*Description:*
+
+Couchbase client library has been upgraded to version 2.7.20.
+
+Impacted components: CouchbaseLoader, RefDataServiceManager
+
+[[CMSEIUM-20956]]
+*ID:* CMSEIUM-20956
+
+*Description:*
+
+Tomcat has been upgraded to version 9.0.52.
+
+Impacted components: HttpConnector, eIUM Operations Console
+
+[[CMSEIUM-19647]]
+*ID:* CMSEIUM-19647
+
+*Description:*
+
+The management server sent invalid server state change notifications
+when the admin agent was starting, causing the Operations Console UI to
+display wrong state for running processes. This has been fixed now, all
+processes are shown with correct state in the Operations Console UI.
+
+Impacted components: ManagementServer, eIUM Operations Console
+
+== Cumulative Patch ID: 20210902-1721
+
+=== Enhancements
+
+[[CMSEIUM-20806]]
+*ID:* CMSEIUM-20806
+
+*Description:*
+
+The secserveractivate command has been enhanced to accept multiple LDAP
+server URLs for lookup and login LDAP servers to activate the security
+server.
+
+Impacted components : Security Server, Activator
+
+[[CMSEIUM-20791]]
+*ID:* CMSEIUM-20791
+
+*Description:*
+
+Loadbalancer Router and LoadbalancerRule now support filling the server
+name, address, and group name in flat NMEs after the load balancer
+selected the routing address.
+
+[[CMSEIUM-20751]]
+*ID:* CMSEIUM-20751
+
+*Description:*
+
+The MgmtDatabaseConfig component now provides additional parameters to
+configure the connection pool used by the central management server. By
+default, the management server is configured with a maximum of 15
+connections, but you can change this configuration in case of high load
+and lack of connections.
+
+[[CMSEIUM-20734]]
+*ID:* CMSEIUM-20734
+
+*Description:*
+
+TLS PSK protocol is now supported for HttpProtocol and Http2Protocol.
+
+[[CMSEIUM-20727]]
+*ID:* CMSEIUM-20727
+
+*Description:*
+
+A new component, AlertNotificationDecoder, has been introduced. It can
+be configured as the AlertNotificationDecoder subnode of
+SMPPClientEndPoint.
+
+A new configuration attribute, AlertRuleChain, has been created for
+SMPPClientEndPoint to process the incoming alerts.
+
+Impacted components: SMPPClientEndPoint
+
+[[CMSEIUM-20726]]
+*ID:* CMSEIUM-20726
+
+*Description:*
+
+A new configuration subnode, DataSMDecoder, has been introduced under
+SMSCConnector to decode incoming data_sm requests.
+
+New configuration attributes, DataRuleChain and
+DataSMResponseAttributes, have been introduced under SMSCConnector to
+handle the data_sm messages.
+
+Impacted components: SMSCConnector
+
+[[CMSEIUM-20721]]
+*ID:* CMSEIUM-20721
+
+*Description:*
+
+The RedisCache now supports GZIP compression.
+
+[[CMSEIUM-20620]]
+*ID:* CMSEIUM-20620
+
+*Description:*
+
+Helm charts have been developed for installing the Prometheus Adapter.
+This third party registers itself as the custom metrics server with the Kubernetes API server for providing the custom metrics required by the
+Horizontal Pod Autoscaler.
+
+The third party extracts the metrics from the Prometheus instance
+scraping the information from the eIUM session servers.
+
+[[CMSEIUM-18684]]
+*ID:* CMSEIUM-18684
+
+*Description:*
+
+Map type is now supported in transformations.
+
+=== Defects
+
+[[QXCR1001709801]]
+*ID:* QXCR1001709801
+
+*Symptoms:*
+
+DeltaCalculationMatchRule drops deltas on restart when KeepActive and
+PersistActive are set to true.
+
+*Resolution:*
+
+DeltaCalculationMatchRule has been modified to persist deltas on restart
+when KeepActive and PersistActive are set to true.
+
+[[QXCR1001632468]]
+*ID:* QXCR1001632468
+
+*Symptoms:*
+
+NMERPCServerResponseRule set the NME type in NMEAdapter to the encode
+attribute after sending out the response asynchronously.
+
+*Resolution:*
+
+NMERPCServerResponseRule now sets the root NME back into the NMEAdapter
+after sending out the response asynchronously, so that the next rule
+sees the original NMEAdapter content.
+
+[[CMSEIUM-20931]]
+*ID:* CMSEIUM-20931
+
+*Description:*
+
+New ResolveAddresses configuration attribute has been introduced in
+HttpProtocol to set the host name instead of the IP address in the Host
+HTTP header of the request generated.
+
+[[CMSEIUM-20929]]
+*ID:* CMSEIUM-20929
+
+*Description:*
+
+The NMERPC internal heartbeat request response incorrectly appeared as
+part of the statistical data. This has been fixed now.
+
+[[CMSEIUM-20904]]
+*ID:* CMSEIUM-20904
+
+*Description:*
+
+The templateServiceBridge task has been fixed in CIS running in IPv6
+only environment.
+
+The following logic has been implemented:
+
+* If the system property com.hp.usage.rpc.bind.host=<IP address> is set, the specified IP address is published in the registry. Other interface addresses are not published.
+
+* Virtual network interfaces are not filtered out.
+
+* Loopback and offline network interfaces are filtered out.
+
+* Multiple IP addresses (if any) are published in the registry.
+
+* Multiple IP addresses are sorted with the following priority:
+
+.. Link local addresses (169.254.0.0/16) have least priority.
+
+.. Site local addresses (10/8, 192.168/16 etc.) have less
+priority than public addresses.
+
+.. IPv4 addresses have priority over IPv6.
+
+[[CMSEIUM-20881]]
+*ID:* CMSEIUM-20881
+
+*Description:*
+
+The extra “items” element has been removed from the simple key values
+used in the vimConnectionInfo JSON structure.
+
+[[CMSEIUM-20878]]
+*ID:* CMSEIUM-20878
+
+*Description:*
+
+PlainHttpRequest has been fixed to override the default Content-Type
+when RequestHeaderMap is configured and RequestContentAttribute is not
+configured.
+
+[[CMSEIUM-20866]]
+*ID:* CMSEIUM-20866
+
+*Description:*
+
+The graceful shutdown mechanism of KafkaConnector in consumer mode has
+now been fixed.
+
+[[CMSEIUM-20842]]
+*ID:* CMSEIUM-20842
+
+*Description:*
+
+A new system property has been introduced to prevent the
+NoMatchException filling the logfile with stack trace. The property can
+be enabled under the process "Properties" configuration node, using the
+following configuration:
+
+JVMPROPERTIES=com.hp.siu.collector.aggregator.NoMatchException;
+
+Use these settings only when you have performed your functionality
+testing, and when you see these exceptions in the profiler are slowing
+down the process performance. Remove these settings when you are
+debugging an issue.
+
+[[CMSEIUM-20786]]
+*ID:* CMSEIUM-20786
+
+*Description:*
+
+A new configuration attribute has been introduced in
+JsonFormatValidationCheck to validate duplicate keys under the same
+object.
+
+[[CMSEIUM-20785]]
+*ID:* CMSEIUM-20785
+
+*Description:*
+
+The Attributes configuration attribute under NMEServiceLoader has now
+become optional.
+
+[[CMSEIUM-20776]]
+*ID:* CMSEIUM-20776
+
+*Description:*
+
+GRPCClientConnector has been fixed to preserve the request NME
+attributes in the GRPC NME response.
+
+[[CMSEIUM-20769]]
+*ID:* CMSEIUM-20769
+
+*Description:*
+
+JMX connectors have been fixed so that HPE eIUM can be activated in an
+IPv6 network.
+
+[[CMSEIUM-20714]]
+*ID:* CMSEIUM-20714
+
+*Description:*
+
+The logs have been enhanced with additional information about the time
+each service spends in the polling cycle. To activate this, use the
+following command:
+
+siucontrol -n ManagementServer -c setLogLevel
+com.hp.usage.mgmt.PollingService 8
+
+[[CMSEIUM-20709]]
+*ID:* CMSEIUM-20709
+
+*Description:*
+
+The count of Critical, Warning, and Error messages has now been fixed to
+match with the log shown in the log viewer.
+
+[[CMSEIUM-20679]]
+*ID:* CMSEIUM-20679
+
+*Description:*
+
+RefreshCacheRule can now successfully refresh caches through JMX in
+secure deployments.
+
+[[CMSEIUM-20675]]
+*ID:* CMSEIUM-20675
+
+*Description:*
+
+The Alarms panel of the eIUM Operations Console has been fixed not to
+display negative values as the number of alarms.
+
+[[CMSEIUM-20654]]
+*ID:* CMSEIUM-20654
+
+*Description:*
+
+The Intelligent Search function has been fixed, and is now able to
+search the Timestamp, Source, and Message columns properly in the Alarm
+panel.
+
+[[CMSEIUM-20050]]
+*ID:* CMSEIUM-20050
+
+*Description:*
+
+SNMEAdornmentRule map now supports keys with spaces.
+
+[[CMSEIUM-19994]]
+*ID:* CMSEIUM-19994
+
+*Description:*
+
+The SMTPClientConnector has been fixed to skip connection check and an
+extra NOOP command after an EHLO/HELO command.
+
+[[CMSEIUM-19545]]
+*ID:* CMSEIUM-19545
+
+*Description:*
+
+The connection leak in TCPConnector has been fixed.
+
+[[CMSEIUM-19344]]
+*ID:* CMSEIUM-19344
+
+*Description:*
+
+The collector has been fixed not to attempt to connect to the registry
+when the -registry option is not specified.
+
+[[CMSEIUM-5999]]
+*ID:* CMSEIUM-5999
+
+*Description:*
+
+When JDBCQuery operation was configured in nested order in the
+configuration, the DB connection was not released until all the
+JDBCQuery had been completed. This could lead to deadlock situation when
+the number of the available DB connections was less in the
+JDBCConnectionPool. This has been fixed now; connections are returned to
+the pool as soon as the query is executed.
+
+[[CMSEIUM-5096]]
+*ID:* CMSEIUM-5096
+
+*Description:*
+
+The RuleChainAlgorithm with DestinationAddressAttrName now checks a
+backend server status and does not allow to send the message to a paused
+server.
+
+== Cumulative Patch ID: 20210715-1123
+
+=== Enhancements
+
+[[CMSEIUM-20685]]
+*ID:* CMSEIUM-20685
+
+*Description:*
+
+The journal view in the CIS UI has been enhanced.
+
+In the Action field of the journal record, the generic string “Execute
+custom target” now includes a specific custom target name that is being
+executed. The pattern is “Execute UpdateCommon custom target”, where
+UpdateCommon is the name of the custom target defined in the VNF
+Descriptor.
+
+[[CMSEIUM-20668]]
+*ID:* CMSEIUM-20668
+
+*Description:*
+
+Arrays containing items greater than 65535 were not getting encoded
+correctly. This has been fixed now.
+
+[[CMSEIUM-20555]]
+*ID:* CMSEIUM-20555
+
+*Description:*
+
+SNMEReaderFactory now supports reading of map type SNME attributes from
+binary data stores.
+
+[[CMSEIUM-20554]]
+*ID:* CMSEIUM-20554
+
+*Description:*
+
+SNMEWriterFactory now supports writing of map type SNME attributes to
+the binary data stores.
+
+[[CMSEIUM-20551]]
+*ID:* CMSEIUM-20551
+
+*Description:*
+
+The DecisionTableRule now supports ErrorHandler and NoMatchRule.
+
+[[CMSEIUM-20448]]
+*ID:* CMSEIUM-20448
+
+*Description:*
+
+SMTPClientConnector with CacheConnection=false now allows multiple
+connections to be created at the same time.
+
+[[CMSEIUM-20417]]
+*ID:* CMSEIUM-20417
+
+*Description:*
+
+MBean registration monitor traces the MBean server registration activity
+and notifies the user about too frequent registration/deregistration
+actions by sending an alarm. In case of receiving such an alarm,
+operators can review the configuration and disable manageable resources
+responsible for such activity.
+
+[[CMSEIUM-20384]]
+*ID:* CMSEIUM-20384
+
+*Description:*
+
+The SNMEAdornmentRule copy operation now supports range parameters.
+
+[[CMSEIUM-20268]]
+*ID:* CMSEIUM-20268
+
+*Description:*
+
+The SMTPClientConnector configuration has been enhanced with
+the ResponseCodeAttribute. This attribute is configured with an NME
+attribute. The SMTP client connector sets the value of the response code
+returned by the SMTP server, in the NME attribute referred by
+ResponseCodeAttribute.
+
+[[CMSEIUM-20266]]
+*ID:* CMSEIUM-20266
+
+*Description:*
+
+Usage parameters support more than one NME as key in dynamic statistics.
+Those attributes can be specified as a list in UsageParametersInterface;
+the list elements are separated by the "|" symbol. Along with the name
+of the NME attribute, it supports an alternative name that can be used
+as an additional property.
+
+[[CMSEIUM-20242]]
+*ID:* CMSEIUM-20242
+
+*Description:*
+
+Prometheus exporter is now able to provide additional labels for
+metrics. Those labels can be defined in usage parameters.
+
+[[CMSEIUM-20196]]
+*ID:* CMSEIUM-20196
+
+*Description:*
+
+The decision table CLI tool (dttool) now supports the list operation
+that lists the existing decision tables.
+
+[[CMSEIUM-20182]]
+*ID:* CMSEIUM-20182
+
+*Description:*
+
+A new functionality has been created to support sending and receiving
+NGAP PDU requests. It uses ASN.1 encoding and decoding.
+
+[[CMSEIUM-20146]]
+*ID:* CMSEIUM-20146
+
+*Description:*
+
+The decision table CLI tool (dttool) now supports importing Excel files.
+
+[[CMSEIUM-20145]]
+*ID:* CMSEIUM-20145
+
+*Description:*
+
+The decision table CLI tool (dttool) now supports exporting to Excel and
+XML formats.
+
+[[CMSEIUM-20144]]
+*ID:* CMSEIUM-20144
+
+*Description:*
+
+The decision table CLI tool (dttool) now supports the delete table
+operation.
+
+[[CMSEIUM-19904]]
+*ID:* CMSEIUM-19904
+
+*Description:*
+
+The AdornmentRule has been extended with the IPV6Range operation that
+returns the  minimum and maximum network range and prefix length for a
+given IPv6 address.
+
+[[CMSEIUM-19673]]
+*ID:* CMSEIUM-19673
+
+*Description:*
+
+HPE eIUM 10.6.1 uses VoltDB 10.2.4 LTS version.
+
+[[CMSEIUM-18683]]
+*ID:* CMSEIUM-18683
+
+*Description:*
+
+The JSON-codec now supports Map type. The XFD-syntax has been extended
+to describe map attribute.
+
+=== Defects
+
+[[QXCR1001611560]]
+*ID:* QXCR1001611560
+
+*Symptoms:*
+
+FilePersistentStore and FileNamingPolicy under NMEStore generated out of
+sequence files when the files were generated too frequently.
+
+[[QXCR1001610764]]
+*ID:* QXCR1001610764
+
+*Symptoms:*
+
+DelimiterParser did not reject incomplete records with UseAllTokens set
+to true, even when ValidateTokenCount is set to true.
+
+*Resolution:*
+
+DelimiterParser has been fixed to work correctly when UseAllTokens is
+set to true, along with ValidateTokenCount set to true.
+
+[[QXCR1001555760]]
+*ID:* QXCR1001555760
+
+*Symptoms:*
+
+ArrayIndexOutOfBoundsException occurs in RadiusConnector when the
+received tag is 255, which causes the process to crash.
+
+*Resolution:*
+
+RadiusConnector has been fixed to work correctly when receiving a tag
+255, and not to crash the process in that case.
+
+[[CMSEIUM-20684]]
+*ID:* CMSEIUM-20684
+
+*Description:*
+
+In 10.6, SimpleProtocol allows response tracking when
+PreserveRequest=true. That is, when a response does not arrive within
+the time interval specified by TCPEndPoint.SocketTimeout (in
+milliseconds), the error rule is executed with a
+ConnectionTimedoutException. With this fix, it is no longer needed to
+configure Connector.SynchronousCallTimeout, and SocketTimeout should be
+configured instead.
+
+[[CMSEIUM-20642]]
+*ID:* CMSEIUM-20642
+
+*Description:*
+
+The Data command of the SMTPConnector has been fixed to render
+appropriate content data while retaining the .CRLF as terminating
+characters in the DataCommandBinaryAttribute.
+
+[[CMSEIUM-20586]]
+*ID:* CMSEIUM-20586
+
+*Description:*
+
+eIUM security defaults have been changed to have a default certificate
+key strength of 2048 while generating the internal certificates. The
+patch must be installed before the activation for the parameters to
+fully take effect. For already activated instances, the following steps
+must be performed:
+
+. Delete the certificate nodes under root context in the lookup LDAP server.
+
+. Deactivate the  eIUM instance.
+
+. Run secactivate cleanup to delete existing keystores.
+
+. Run the activate tool to reactivate.
+
+[[CMSEIUM-20581]]
+*ID:* CMSEIUM-20581
+
+*Description:*
+
+In case the Binary attribute is null in the payload, then encoding skips
+that attribute and does not throw null.
+
+[[CMSEIUM-20573]]
+*ID:* CMSEIUM-20573
+
+*Description:*
+
+Swaggertool and OpenAPI components have been fixed to support allOf
+types in the YAML file.
+
+[[CMSEIUM-20561]]
+*ID:* CMSEIUM-20561
+
+*Description:*
+
+HttpProtocol has been fixed to send response without Content-Length when
+Transfer-Encoding is chunked.
+
+[[CMSEIUM-20543]]
+*ID:* CMSEIUM-20543
+
+*Description:*
+
+AdornmentRule template operation has been fixed to not fail
+with NoClassDefFoundError.
+
+[[CMSEIUM-20495]]
+*ID:* CMSEIUM-20495
+
+*Description:*
+
+Fixed HttpProxy to populate peer key information from the open/active
+connection instead of remote peer's Host address.
+
+[[CMSEIUM-20480]]
+*ID:* CMSEIUM-20480
+
+*Description:*
+
+HPE eIUM 10.6.1 supports MariaDB 10.5.10.
+
+[[CMSEIUM-20461]]
+*ID:* CMSEIUM-20461
+
+*Description:*
+
+Race condition in SNME has been fixed in SoapHttpRequest with
+SynchronousCallTimeout.
+
+[[CMSEIUM-20432]]
+*ID:* CMSEIUM-20432
+
+*Description:*
+
+The data types for compatibleSpecificationVersions and vnfmInfo
+attributes of VnfPkgInfo entity have been updated to be compatible with
+the NFVD version 5.1.3.
+
+[[CMSEIUM-20429]]
+*ID:* CMSEIUM-20429
+
+*Description:*
+
+MM1DecoderFactory has been fixed to decode MM1-Send-Req header and set
+the char-set value to the Content-Type field.
+
+[[CMSEIUM-20335]]
+*ID:* CMSEIUM-20335
+
+*Description:*
+
+RetryCountOnNoData under PollingRecordEncapsulator has been fixed to work correctly when set to 0 (which implies no retry attempts). In case there is no data for a given sub-encapsulator, PollingRecordEncapsulator
+moves to the next sub-encapsulator without any wait time.  
+
+[[CMSEIUM-20334]]
+*ID:* CMSEIUM-20334
+
+*Description:*
+
+CIS was not able to parse packages fetched from the NFVO if the script
+for a VDU node was referring a "script_path" instead of
+"script_content". This issue has been fixed now.
+
+[[CMSEIUM-20308]]
+*ID:* CMSEIUM-20308
+
+*Description:*
+
+ConnectionCheck has been fixed to execute FalseRuleChain instead of
+throwing an exception.
+
+[[CMSEIUM-20304]]
+*ID:* CMSEIUM-20304
+
+*Description:*
+
+MaxInactiveInterval configuration attribute has been removed from the
+HttpConnector because Tomcat 8.5 does not support it anymore.
+
+[[CMSEIUM-20228]]
+*ID:* CMSEIUM-20228
+
+*Description:*
+
+The IndexOutOfBoundsException errors have been fixed in the
+ManagementServer during shut down.
+
+[[CMSEIUM-19854]]
+*ID:* CMSEIUM-19854
+
+*Description:*
+
+The Siucontext cleanup/Session server cleanup have been fixed to skip
+Sessionstore cleanup when CommonPolicyId or ConnectionPolicy is
+configured. To maintain data consistency, such tables present in
+multiple DBs are to be cleaned up manually. The description of the
+cleanup command in the HPE eIUM Command Reference has been updated
+accordingly.
