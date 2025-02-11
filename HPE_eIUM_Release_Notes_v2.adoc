@@ -1,5 +1,5 @@
-= HPE eIUM Release Notes: Patch eIUM10.6.3.20211027-1641
-:revnumber: HPE eIUM 10.6.3
+= HCLTech eIUM Release Notes
+:revnumber: HCLTech eIUM 10.6.3
 :revdate: October 27, 2021
 :version-label!:
 :doctype: book
@@ -11,9 +11,9 @@
 :numbered:
 :sectlinks:
 :linkcss:
-:stylesdir: d:\GitHub_documentation\asciidoc\stylesheets\
-:stylesheet: hpe_theme_custom.css
-:product_name: HPE eIUM
+:stylesdir: d:\GitHub_documentation\asciidoc_hcltech\stylesheets\
+:stylesheet: hcltech_theme_custom.css
+:product_name: HCLTech eIUM
 
 [preface]
 == Notices

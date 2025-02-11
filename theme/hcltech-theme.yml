@@ -1,19 +1,14 @@
-# TODO: Try to adjust to produce documents that looks HCLTech User Documentation templates
+# This theme tries to produce documents that looks like HCLTech User Documentation templates from DITA.
 
 
 brand: 
-  green_color: #01A982
   white_color: #FFFFFF
   black_color: #00000
   grey1_color: #C6C9CA
+  blue_color: #0F5FDC
 
 font:
   catalog:
-    Metric:
-      normal: arial.ttf
-      italic: ariali.ttf.ttf
-      bold: arialbd.ttf.ttf
-      bold_italic: arialbi.ttf.ttf
     Arial:
       normal: arial.ttf
       italic: ariali.ttf
@@ -23,17 +18,17 @@ font:
       
 title_page:
   align: left
-  background_image: image:hpe_title.png[fit=none,pdfwidth=100%,position=top]
-  title_top: 50%
-  title_font_size: 28
+  background_image: image:hcltech_title.jpg[fit=none,pdfwidth=100%,position=top]
+  title_top: 12%
+  title_font_size: 32
   title_font_style: bold
-  subtitle_font_size: 28
-  subtitle_line_height: 2
+  subtitle_font_size: 20
+  #subtitle_line_height: 2
 
 page:
   layout: portrait
-  #margin: [2.3in, 0.51in, 1.2in, 1.75in] # XXX: Margins from the HPE technical template, Oh, it's so ugly.
-  margin: [0.75in, 1in, 0.75in, 1in]
+  #margin: [2.3in, 0.51in, 1.2in, 1.75in] 
+  margin: [0.75in, 0.5in, 0.75in, 0.5in]
   size: A4
 
 base:
@@ -53,26 +48,51 @@ heading:
   margin_bottom: $vertical_rhythm
 
 link:
-  font_color: $brand_green_color
+  font_color: $brand_blue_color
 
-outline_list:
+#outline_list:
+list:
   indent: $base_font_size * 1.5
 
 header:
   height: 0.75in
   line_height: 1
-  recto_right:
-    content: '{section-or-chapter-title} | *{page-number}*'
-  verso_right:
-    content: $header_recto_right_content
+  recto:
+    left:
+#    content: '{section-or-chapter-title} | *{page-number}*'
+       content: |
+         {document-title} +
+         {chapter-title}      
+    right:
+       content: '*{page-number}*'   
+  verso:
+    left:
+       content: $header_recto_left_content
+    right:
+       content: $header_recto_right_content
+
+footer:
+  height: 0.75in
+  line_height: 1
+  image-vertical-align: 2 
+  recto:
+    right:
+#      content: image:hpe_element.png[fit=none, pdfwidth=20pt]
+      content: image:HCLTechLogo.svg[pdfwidth=70pt]
+  verso:
+    right:
+      content: $footer_recto_right_content
 
 table:
-    border_color: $brand_green_color
-    head_background_color: $brand_grey1_color
-    header_cell_background_color: $brand_grey1_color
+    border_color: $brand_blue_color
+    head_font_style: bold
+    head_border-bottom-color: $brand_blue_color
+    cell-padding: [0, 4, 0, 2]
+#    head_background_color: $brand_grey1_color
+#    header_cell_background_color: $brand_grey1_color
  
 example:
-    border_color: $brand_green_color
+    border_color: $brand_blue_color
 
 caption:
   font_style: bold
@@ -82,4 +102,4 @@ code:
     background_color: $brand_grey1_color
     
 admonition:
-    column_rule_color: $brand_green_color
+    column_rule_color: $brand_blue_color

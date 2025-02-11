@@ -75,46 +75,46 @@ the location of this file.
         -->
 
         <font metrics-url="MetricHPE-App-Thin.xml" kerning="yes" embed-url="file:MetricHPE-App-Thin.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="300"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="300"/>
         </font>
         <font metrics-url="MetricHPE-App-ThinItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-ThinItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="300"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="300"/>
         </font>
         <font metrics-url="MetricHPE-App-Light.xml" kerning="yes" embed-url="file:MetricHPE-App-Light.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="400"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="400"/>
         </font>
         <font metrics-url="MetricHPE-App-LightItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-LightItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="400"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="400"/>
         </font>
         <font metrics-url="MetricHPE-App-Regular.xml" kerning="yes" embed-url="file:MetricHPE-App-Regular.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="500"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="500"/>
         </font>
         <font metrics-url="MetricHPE-App-RegularItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-RegularItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="500"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="500"/>
         </font>
         <font metrics-url="MetricHPE-App-Medium.xml" kerning="yes" embed-url="file:MetricHPE-App-Medium.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="600"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="600"/>
         </font>
         <font metrics-url="MetricHPE-App-MediumItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-MediumItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="600"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="600"/>
         </font>        
         <font metrics-url="MetricHPE-App-Semibold.xml" kerning="yes" embed-url="file:MetricHPE-App-Semibold.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="700"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="700"/>
         </font>
         <font metrics-url="MetricHPE-App-SemiboldItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-SemiboldItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="700"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="700"/>
         </font>
         <font metrics-url="MetricHPE-App-Bold.xml" kerning="yes" embed-url="file:MetricHPE-App-Bold.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="800"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="800"/>
         </font>
         <font metrics-url="MetricHPE-App-BoldItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-BoldItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="800"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="800"/>
         </font>
         <font metrics-url="MetricHPE-App-Black.xml" kerning="yes" embed-url="file:MetricHPE-App-Black.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="normal" weight="900"/>
+	       <font-triplet name="GothamHCL-FOP" style="normal" weight="900"/>
         </font>
         <font metrics-url="MetricHPE-App-BlackItalic.xml" kerning="yes" embed-url="file:MetricHPE-App-BlackItalic.ttf">
-	       <font-triplet name="MetricHPE-FOP" style="italic" weight="900"/>
+	       <font-triplet name="GothamHCL-FOP" style="italic" weight="900"/>
         </font>
         <font metrics-url="HPESimple-Light.xml" kerning="yes" embed-url="file:HPESimple-Light.ttf">
 	       <font-triplet name="HPESimple-FOP" style="normal" weight="200"/>
@@ -529,4 +529,3 @@ the location of this file.
   </renderers>
 
 </fop>
-
