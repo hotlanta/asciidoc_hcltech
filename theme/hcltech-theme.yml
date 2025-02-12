@@ -86,7 +86,7 @@ table:
     border_color: $brand_blue_color
     head_font_style: bold
     head_border-bottom-color: $brand_blue_color
-    cell-padding: [2, 4, 2, 2]
+    cell-padding: [5, 6, 2, 4]
 #    head_background_color: $brand_grey1_color
 #    header_cell_background_color: $brand_grey1_color
  

@@ -312,7 +312,7 @@ caption /* needed to position tablecap */ {
   background-color: rgba(0, 0, 0, 0);
   border-top-style: solid;
   border-top-color: rgb(15, 95, 220, 1);;
-  border-top-width: 3px;
+  border-top-width: 4px;
   border-top-right-radius: 0;
   border-right-style: solid;
   border-right-color: rgb(15, 95, 220, 1);;
