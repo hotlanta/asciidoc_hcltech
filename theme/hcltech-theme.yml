@@ -77,7 +77,6 @@ footer:
   image-vertical-align: 2 
   recto:
     right:
-#      content: image:hpe_element.png[fit=none, pdfwidth=20pt]
       content: image:HCLTechLogo.svg[pdfwidth=70pt]
   verso:
     right:
@@ -87,7 +86,7 @@ table:
     border_color: $brand_blue_color
     head_font_style: bold
     head_border-bottom-color: $brand_blue_color
-    cell-padding: [0, 4, 0, 2]
+    cell-padding: [2, 4, 2, 2]
 #    head_background_color: $brand_grey1_color
 #    header_cell_background_color: $brand_grey1_color
  

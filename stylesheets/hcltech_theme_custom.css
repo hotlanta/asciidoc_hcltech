@@ -140,7 +140,7 @@
 
 .footer a {
   background-color: transparent;
-  color: rgb(0, 179, 136);;
+  color: rgb(15, 95, 220, 1);;
   font-weight: 400;
   font-family: Arial, sans-serif;
   font-style: normal;
@@ -155,7 +155,7 @@
   margin-right: 0px;
   margin-left: 9px;
   font-weight: 700;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-family: Arial, sans-serif;
   font-style: normal;
   margin-bottom: 0px;
@@ -174,7 +174,7 @@
   padding-bottom: 0px;
   padding-right: 2px;
   padding-left: 17px;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-size: 15px;
   font-family: Arial, sans-serif;
   font-style: normal;
@@ -185,7 +185,7 @@
 #header .link {
   background-color: transparent;
   font-size: 15px;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -202,7 +202,7 @@
   box-shadow: none;
   margin-top: 0px;
   margin-left: -5px;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -241,7 +241,7 @@
   padding-left: 0px;
   font-size: 17px;
   box-shadow: transparent 0px 0px 0px 0px;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -255,7 +255,7 @@
   padding-left: 0px;
   font-size: 17px;
   box-shadow: transparent 0px 1px 2px 0px;
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -311,48 +311,48 @@ caption /* needed to position tablecap */ {
   border : 0;
   background-color: rgba(0, 0, 0, 0);
   border-top-style: solid;
-  border-top-color: rgb(0, 179, 136);;
-  border-top-width: 1px;
+  border-top-color: rgb(15, 95, 220, 1);;
+  border-top-width: 3px;
   border-top-right-radius: 0;
   border-right-style: solid;
-  border-right-color: rgb(0, 179, 136);;
+  border-right-color: rgb(15, 95, 220, 1);;
   border-right-width: 1px;
   border-bottom-right-radius: 0;
   border-bottom-style: solid;
-  border-bottom-color: rgb(0, 179, 136);;
-  border-bottom-width: 1px;
+  border-bottom-color: rgb(15, 95, 220, 1);;
+  border-bottom-width: 2px;
   border-bottom-left-radius: 0;
   border-left-style: solid;
-  border-left-color: rgb(0, 179, 136);;
+  border-left-color: rgb(15, 95, 220, 1);;
   border-left-width: 1px;
   border-top-left-radius: 0;
-  border-color: rgb(0, 179, 136);;
+  border-color: rgb(15, 95, 220, 1);;
 }
 
 th.entry {
   background-color: rgba(0, 0, 0, 0);
   border-top-style: solid;
-  border-top-color: rgb(0, 179, 136);;
+  border-top-color: rgb(15, 95, 220, 1);;
   border-top-width: 1px;
   border-top-right-radius: 0;
   border-right-style: solid;
-  border-right-color: rgb(0, 179, 136);;
+  border-right-color: rgb(15, 95, 220, 1);;
   border-right-width: 1px;
   border-bottom-right-radius: 0;
   border-bottom-style: solid;
-  border-bottom-color: rgb(0, 179, 136);;
+  border-bottom-color: rgb(15, 95, 220, 1);;
   border-bottom-width: 1px;
   border-bottom-left-radius: 0;
   border-left-style: solid;
-  border-left-color: rgb(0, 179, 136);;
+  border-left-color: rgb(15, 95, 220, 1);;
   border-left-width: 1px;
   border-top-left-radius: 0;
-  border-color: rgb(0, 179, 136);;
+  border-color: rgb(15, 95, 220, 1);;
 }
 
 td.entry {
   background-color: rgba(0, 0, 0, 0);
-  border : solid 1px rgb(0, 179, 136);
+  border : solid 1px rgb(15, 95, 220, 1);
   font-size: 15px;
 }
 
@@ -365,7 +365,7 @@ td.entry {
 }
 
 #header .tab.selectedTab {
-  background-color: rgb(0, 179, 136);
+  background-color: rgb(15, 95, 220, 1);
   padding-top: 7px;
   padding-bottom: 4px;
   padding-right: 20px;
@@ -402,7 +402,7 @@ td.entry {
 }
 
 #header #space {
-  background-color: rgb(0, 179, 136);
+  background-color: rgb(15, 95, 220, 1);
 }
 
 #header .tab:not(.selectedTab) {
@@ -462,7 +462,7 @@ body{
 }
 
 a{
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-weight: normal;
   text-decoration: none;
   font-family: Arial, sans-serif;
@@ -475,7 +475,7 @@ a{
 }
 
 a.xref:active {
-  color: rgb(0, 179, 136);
+  color: rgb(15, 95, 220, 1);
   font-weight: 400;
   font-family: Arial, sans-serif;
   font-style: normal;
