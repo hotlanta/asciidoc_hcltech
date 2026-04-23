@@ -1,0 +1,272 @@
+= Asciidoctor Installation and Configuration Guide
+:revnumber: Release 1.0 First Edition Part number: E0426
+:version-label!:
+:doctype: book
+:icons: font
+:toc: left
+:toclevels: 5
+:sectnums:
+:sectnumlevels: 6
+:source-highlighter: rouge
+
+== Introduction
+
+This guide explains how to install, verify, and configure Asciidoctor with PDF generation and a custom theme in VS Code.
+
+== Prerequisites
+
+*List of software to install*
+
+. Ruby
+. Asciidoctor
+. asciidoctor-pdf
+. VS Code AsciiDoc extension
+
+NOTE: Watch this video for installation guidance:
+https://www.youtube.com/watch?v=z0ZCso44dRM[Asciidoctor Markup Quick Start]
+
+NOTE: Ruby 3.x is recommended for compatibility with Asciidoctor and PDF tooling.
+
+== Installation
+
+=== Step 1: Install Ruby
+
+Download and install Ruby:
+
+https://rubyinstaller.org/downloads/[Ruby Downloads]
+
+IMPORTANT: During installation, *uncheck* the MSYS install option.
+
+IMPORTANT: After installation, restart your terminal to ensure Ruby is added to the system PATH.
+
+---
+
+=== Step 2: Install Asciidoctor
+
+Open *Windows PowerShell as Administrator* and run:
+
+[source,powershell]
+----
+gem install asciidoctor <1>
+----
+<1> Installs the core Asciidoctor processor.
+
+---
+
+=== Step 3: Install PDF support
+
+Install the PDF backend:
+
+[source,powershell]
+----
+gem install asciidoctor-pdf <1>
+----
+<1> Enables PDF generation.
+
+Verify prerequisites if needed:
+https://github.com/asciidoctor/asciidoctor-pdf#prerequisites[View prerequisites]
+
+---
+
+=== Step 4: Optional dependencies
+
+[source,powershell]
+----
+gem install concurrent-ruby <1>
+gem install coderay        <2>
+----
+<1> Improves performance.
+<2> Adds syntax highlighting (optional if using Rouge).
+
+---
+
+=== Step 5: Install VS Code extension
+
+Install:
+
+https://github.com/asciidoctor/asciidoctor-vscode[AsciiDoc VS Code Extension]
+
+---
+
+== Verify Installation
+
+[source,powershell]
+----
+ruby -v <1>
+asciidoctor -v <2>
+asciidoctor-pdf -v <3>
+----
+<1> Confirms Ruby is installed.
+<2> Confirms Asciidoctor is available.
+<3> Confirms PDF support is working.
+
+If any command is not recognized, verify that Ruby is correctly added to the system PATH.
+
+For additional diagnostics:
+
+[source,powershell]
+----
+gem env <1>
+----
+<1> Displays RubyGems environment details.
+
+---
+
+== VS Code Configuration (Custom PDF Theme)
+
+This section configures VS Code to use a custom PDF theme.
+
+=== Step 1: Clone the theme repository
+
+[source,bash]
+----
+git clone git@github.com:hotlanta/asciidoc_hcltech.git <1>
+----
+<1> Contains theme and font files required for PDF styling.
+
+NOTE: If SSH is not configured, use HTTPS:
+
+[source,bash]
+----
+git clone https://github.com/hotlanta/asciidoc_hcltech.git
+----
+
+---
+
+=== Step 2: Locate required files
+
+From the repository:
+
+- Theme file: `hcltech-theme.yml`
+- Fonts directory: `fonts/`
+
+IMPORTANT: Ensure all fonts referenced in the theme file exist in the fonts directory.
+
+---
+
+=== Step 3: Configure VS Code settings
+
+Open VS Code → *Settings* → search for:
+
+`Asciidoc: Pdf Command Args`
+
+Add the following entries *individually*:
+
+[source,text]
+----
+-a
+pdf-theme=D:/path/to/asciidoc_hcltech/theme/hcltech-theme.yml
+
+-a
+pdf-fontsdir=D:/path/to/asciidoc_hcltech/fonts
+
+-r
+asciidoctor-pdf
+----
+
+<1> Each `-a` must be a separate entry.
+<2> Paths must be absolute.
+<3> Use forward slashes `/` on Windows.
+
+IMPORTANT: Do not combine arguments like:
+----
+-a pdf-theme=...
+----
+
+---
+
+=== Step 4: Example configuration
+
+[source,text]
+----
+-a
+pdf-theme=D:/hotlanta_git/asciidoc_hcltech/theme/hcltech-theme.yml
+
+-a
+pdf-fontsdir=D:/hotlanta_git/asciidoc_hcltech/fonts
+
+-r
+asciidoctor-pdf
+----
+
+---
+
+=== Step 5: Verify configuration
+
+Generate a PDF in VS Code:
+
+- Open `.adoc` file
+- Press `Ctrl+Shift+P`
+- Select: `AsciiDoc: Export document as PDF`
+
+If configured correctly:
+- Custom theme is applied
+- Fonts render correctly
+- No warnings appear in the output
+
+---
+
+== Asciidoctor Upgrade
+
+=== Update Asciidoctor
+
+[source,powershell]
+----
+gem update asciidoctor <1>
+----
+<1> Updates to the latest version.
+
+---
+
+=== Clean old versions
+
+[source,powershell]
+----
+gem cleanup asciidoctor <1>
+----
+<1> Removes outdated versions.
+
+---
+
+== Asciidoc editors
+
+* https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode[AsciiDoc VS Code Extension]
+
+* https://asciidocfx.com/[AsciidocFX Editor]
+
+* https://notepad-plus-plus.org/[Notepad++]
+
+* Any text editor
+
+---
+
+== AsciiDoc Syntax Reference
+
+https://docs.asciidoctor.org/asciidoc/latest/[Official Documentation]
+
+---
+
+== Troubleshooting
+
+=== Commands not recognized
+
+- Restart terminal
+- Verify PATH configuration
+- Reinstall Ruby if necessary
+
+=== PDF not using theme
+
+- Verify file paths
+- Ensure arguments are separate
+- Confirm theme file exists
+
+=== Fonts not applied
+
+- Check `pdf-fontsdir`
+- Ensure fonts exist and are valid (TTF/OTF)
+
+=== VS Code export fails
+
+- Verify extension settings
+- Restart VS Code
+- Check output logs for errors

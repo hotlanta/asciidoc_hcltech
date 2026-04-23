@@ -3,18 +3,40 @@
 
 brand: 
   white_color: #FFFFFF
-  black_color: #00000
+  black_color: #000000
   grey1_color: #C6C9CA
   blue_color: #0F5FDC
 
 font:
   catalog:
-    Arial:
-      normal: arial.ttf
-      italic: ariali.ttf
+    HCLTechRoobert:
+      normal: HCLTechRoobert-Light.ttf
+      italic: HCLTechRoobert-LightItalic.ttf
+      bold: HCLTechRoobert-Heavy.ttf
+      bold_italic: HCLTechRoobert-HeavyItalic.ttf
+    DejaVuSans:
+      normal: DejaVuSans.ttf
+      bold: DejaVuSans-Bold.ttf
+      italic: DejaVuSans-Oblique.ttf
+      bold_italic: DejaVuSans-BoldOblique.ttf
+    # Arial for list markers (nested bullets)
+    ListFallback:
+      normal: arial.ttf 
       bold: arialbd.ttf
-      bold_italic: arialbi.ttf
-  fallbacks: [Arial]
+      italic: ariali.ttf
+      bold_italic: arialbi.ttf  
+    UnicodeFallback:
+      normal: DejaVuSans.ttf
+      bold: DejaVuSans-Bold.ttf
+      italic: DejaVuSans-Oblique.ttf
+      bold_italic: DejaVuSans-BoldOblique.ttf          
+  fallbacks: [HCLTechRoobert, DejaVuSans, UnicodeFallback, ListFallback]
+
+listing:                              # for ---- blocks
+  font-family: UnicodeFallback
+
+codespan:                              # for inline `monospace`
+  font-family: UnicodeFallback
       
 title_page:
   align: left
@@ -33,7 +55,7 @@ page:
 
 base:
   font_color: #333333
-  font_family: Arial
+  font-family: HCLTechRoobert
   font_size: 11
   line_height_length: 17
   line_height: $base_line_height_length / $base_font_size
@@ -53,6 +75,8 @@ link:
 #outline_list:
 list:
   indent: $base_font_size * 1.5
+  marker:
+    font-family: ListFallback
 
 header:
   height: 0.75in
@@ -99,6 +123,9 @@ caption:
 code:
     border_color: $brand_grey1_color
     background_color: $brand_grey1_color
+    font-family: UnicodeFallback
+    font-size: $base_font_size * 0.95
+    line-height: 1.15
     
 admonition:
     column_rule_color: $brand_blue_color
