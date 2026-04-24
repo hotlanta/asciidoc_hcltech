@@ -1,0 +1,32 @@
+[[notices]]
+= Notices
+
+Legal Notice
+
+{company_name_long} © 2025-2026. All rights reserved. Valid license
+from {company_name_long} ({company_name}) required for possession, use or
+copying. The information contained herein is subject to change without
+notice. The only warranties for {company_name} products and services are set
+forth in the express warranty statements accompanying such products and
+services. Nothing herein should be construed as constituting an
+additional warranty. {company_name} shall not be liable for technical or
+editorial errors or omissions contained herein.
+
+Trademarks
+
+VMware® ESXi™ and VMware vSphere® are registered trademarks of VMware,
+Inc. and its subsidiaries in the United States and other
+jurisdictions. +
+Amazon Web Services (AWS) and Amazon EC2 are trademarks of Amazon.com,
+Inc. or its affiliates in the United States and/or other countries. +
+Linux® is the registered trademark of Linus Torvalds in the U.S. and
+other countries. +
+Red Hat® and Red Hat® Enterprise Linux Certified are trademarks of Red
+Hat, Inc. in the United States and other countries. +
+Oracle and Java are registered trademarks of Oracle and/or its
+affiliates. +
+MySQL is a registered trademark of MySQL AB in the United States, the
+European Union, and other countries. +
+QEMU is a trademark of Fabrice Bellard.
+
+All other trademarks are the property of their respective owners.

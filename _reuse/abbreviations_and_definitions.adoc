@@ -1,0 +1,98 @@
+[[abbreviations-and-definitions]]
+= Abbreviations and definitions
+
+The following tables list the abbreviations and definitions used in the
+HCLTech Device Entitlement Gateway documentation set:
+
+.*Abbreviations*
+[width="99%",cols="50%,50%",options="header"]
+|===
+|4FF |Fourth Form Factor (nano-SIM card) 
+|AAA |Authentication, Authorization and Accounting 
+|API |Application Programming Interface 
+|APN |Access Point Name 
+|APNS |Apple Push Notification Server 
+|AVP |Attribute-Value Pairs 
+|AWS |Amazon Web Services 
+|AWS ECS |AWS Elastic Container Service 
+|BSS |Business Support System 
+|DB |Database 
+|DEA |Diameter Edge Agent 
+|DEG |Device Entitlement Gateway 
+|DPA |Data Plan Agent 
+|DRA |Diameter Routing Agent 
+|EAP |Extensible Authentication Protocol 
+|EAP-AKA |Extensible Authentication Protocol – Authentication and Key Agreement 
+|EC2 |Elastic Compute Cloud 
+|ECS |Entitlement Configuration Server 
+|ECR |Elastic Container Registry 
+|EFS |Elastic File System 
+|E&FR |Entitlement & Feature Registration 
+|eIUM |enhanced Interactive Unified Mediation 
+|eSIM |embedded SIM 
+|eUICC |embedded Universal Integrated Circuit Card 
+|FCM |Firebase Cloud Messaging 
+|FQDN |Fully Qualified Domain Name 
+|GAPI |Google API 
+|GCM |Google Cloud Messaging 
+|GTAF |Google Traffic Application Function 
+|GUI |Graphical User Interface 
+|GW |Gateway 
+|HA |High availability 
+|HSS |Home Subscriber Server 
+|HTTP |HyperText Transfer Protocol 
+|HTTPS |Hyper Text Transfer Protocol Secure 
+|ICCID |Integrated Circuit Card Identifier 
+|IMSI |International Mobile Subscriber Identity 
+|JSON |JavaScript Object Notation 
+|LTE |Long Term Evolution 
+|MCC |Mobile Country Code 
+|MDN |Mobile Directory Number 
+|MDP |Mobile Data Plan 
+|MNC |Mobile Network Code 
+|MNO |Mobile Network Operator 
+|MSISDN |Mobile Subscriber Integrated Services Digital Network Number 
+|MTR |Mobile Termination Record 
+|MUD |Multi-device 
+|NME |Normalized Metered Event 
+|OA&M |Operations, administration, and management 
+|OTP |One-time password 
+|PNV |Phone Number Verification 
+|PWD |Password 
+|RDS |Relational Database Service 
+|RCS |Rich Communication Services 
+|RDBMS |Relational Database Management System 
+|SA |Standalone 
+|SaaS |Software as a Service 
+|SMPP |Short Message Peer-to-Peer 
+|SOAP |Simple Object Access Protocol 
+|SQL |Structured Query Language 
+|SSL |Secure Socket Layer 
+|SSO |Single sign-on 
+|TLS |Transport Layer Security 
+|UDR |Usage data record 
+|UI |User Interface 
+|UID |User ID 
+|URI |Uniform Resource Identifier 
+|URL |Uniform Resource Locator 
+|USSD |Unstructured Supplementary Service Data 
+|WSDL |Web Services Definition Language 
+|VoWiFi |Voice over Wi-Fi 
+|VoLTE |Voice over LTE 
+|VPC |Virtual Private Cloud 
+|XML |Extensible Markup Language
+|===
+
+.*Definitions*
+[width="99%",cols="50%,50%",options="header"]
+|===
+|Item |Definition
+|IMSI |The International Mobile Subscriber Identity (IMSI) is an internationally standardized unique number to identify a mobile subscriber. The IMSI is defined in ITU-T Recommendation E.212. The number consists of a Mobile Country Code (MCC), a Mobile Network Code (MNC), and a Mobile Station Identification Number (MSIN). IMSI refers to the Primary account’s subscriber ID. 
+|MDN |The Mobile Directory Number (MDN) is a number string used to uniquely identify a mobile telephone subscriber in GSM, CDMA, and UMTS cellular networks. 
+|API |Application program interface (API) is a set of routines, protocols, and tools for building software applications. An API specifies how software components should interact. In addition, APIs are used when programming graphical user interface (GUI) components. 
+|WSDL |Web Service Definition Language (WSDL) (W3C) is an XML format for describing network services as a set of endpoints operating on messages containing either document-oriented or procedure-oriented information. The operations and messages are described abstractly, and then bound to a concrete network protocol and message format to define an endpoint. 
+|FatherMDN |The MDN of the subscriber under whom there is one or more child accounts in order to support the Family Plan account type. 
+|APNS |Apple Push Notification Service (APNs) is a platform notification service created by Apple Inc. that enables third party application developers to send notification data to applications installed on Apple iOS Devices. 
+|GCM |Google Cloud Messaging (GCM) is a mobile notification service developed by Google that enables third-party application developers to send notification data or information from developer-run servers to applications that target the Google Android operating system, as well as applications or extensions developed for the Google Chrome internet browser. 
+|FCM |Firebase Cloud Messaging (FCM), formerly known as Google Cloud Messaging (GCM), is a cross- platform cloud solution for messages and notifications for third-party applications, which currently can be used at no cost. The service is provided by Firebase, a subsidiary of Google.
+|===

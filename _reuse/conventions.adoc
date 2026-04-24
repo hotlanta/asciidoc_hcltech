@@ -1,0 +1,31 @@
+[[conventions]]
+= Conventions
+
+This document uses the following symbolic conventions:
+
+.*Symbolic conventions*
+[width="48%",cols="50%,50%",options="header",]
+|===
+|Convention |Description
+|Fixed width text |Used for file names, file paths, file contents, computer inputs or outputs, parameter names, and program code. 
+|*Bold text* |Indicates emphasized text and navigation options in user interfaces, keyboard key names, emphasized text, and terms in definition lists. Multi-level menu paths also contain the *++>++* sign; for example, Start *++>++* Settings *++>++* Control Panel. 
+|Table link:#_Numd21e4322[Table] |Indicates internal cross-references to sections, table or figure titles, or external references to web resources. 
+|++<++fixed-width-text-in-angle-brackets++>++ |Used for generic variable names that must be substituted by real values or strings. 
+|_Italicized text_ |Used for book or document titles. 
+|*Important:* |Indicates essential information to explain a concept or to complete a task. 
+|*Note:* |Indicates additional information to emphasize or supplement important points of the main text. 
+|*Tip:* |Provides helpful hints for completing a task. A tip might provide an alternative method for completing the task that precedes it.
+|===
+
+This document uses the following style conventions for procedures:
+
+.*Style conventions*
+[width="99%",cols="50%,50%",options="header"]
+|===
+|Subsection title |Description
+|Before you begin |Describes the prerequisites of the procedure. 
+|About this task |Provides background information on the procedure. 
+|Procedure |Lists the procedure steps in sequence. 
+|Results |Result to achieve after the steps in the Procedure section are completed. 
+|Next steps |What to do after the procedure is completed.
+|===

@@ -1,0 +1,3 @@
+:google:
+:show-google:
+:device-label: Google

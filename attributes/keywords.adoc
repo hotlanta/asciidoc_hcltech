@@ -1,0 +1,4 @@
+:company_name: HCLTech
+:company_name_long: HCL Technologies Ltd.
+:product_name: DEG
+:product_name_long: HCLTech DEG

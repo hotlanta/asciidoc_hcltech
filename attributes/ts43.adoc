@@ -1,0 +1,3 @@
+:ts43:
+:show-ts43:
+:device-label: TS.43

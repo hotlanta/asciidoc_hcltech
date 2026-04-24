@@ -1,0 +1,3 @@
+:microsoft:
+:show-microsoft:
+:device-label: Microsoft

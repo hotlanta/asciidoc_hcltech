@@ -1,0 +1,354 @@
+// =============================================================================
+// AsciiDoc → PDF Build Script
+// =============================================================================
+// Requires: Gradle 7+ and JDK 11+
+//
+// USAGE
+// -----
+//  Build ALL files (uses .adoc file defaults):
+//    .\gradlew.bat buildAllPdfs
+//
+//  Build ALL files overriding one or more attributes:
+//    .\gradlew.bat buildAllPdfs -Paudience=nonrestricted
+//    .\gradlew.bat buildAllPdfs -Paudience=restricted -Pdevice=ts43
+//
+//  Build all values of a single dimension into separate subfolders:
+//    .\gradlew.bat buildAll_audiences       → pdf/restricted/ + pdf/nonrestricted/
+//    .\gradlew.bat buildAll_devices         → pdf/ios/ + pdf/ts43/ + ...
+//
+//  Build a specific dimension value:
+//    .\gradlew.bat buildAll_audience_restricted
+//    .\gradlew.bat buildAll_audience_nonrestricted
+//    .\gradlew.bat buildAll_device_ios
+//
+//  Build all dimension+value combinations (full matrix):
+//    .\gradlew.bat buildAllVariants
+//
+//  Build ONE file:
+//    .\gradlew.bat buildPdf -Pdoc=my-document.adoc
+//    .\gradlew.bat buildPdf -Pdoc=my-document.adoc -Paudience=nonrestricted
+//
+//  Build ONLY updated files:
+//    .\gradlew.bat buildUpdatedPdfs
+//
+//  List all docs and their status:
+//    .\gradlew.bat listDocs
+//
+// ADDING / REMOVING / RENAMING ATTRIBUTES
+// ----------------------------------------
+//  Edit ONLY the variantDimensions map in the ext{} block below.
+//  - Each key   = AsciiDoc attribute name (must match what your .adoc uses)
+//  - Each value = list of known values (first value = default)
+//  Everything else in the script is driven automatically from that map.
+//
+// OUTPUT
+// ------
+//  pdf/                              → buildAllPdfs (uses .adoc defaults)
+//  pdf/<dimValue>/                   → buildAll_<dim>_<value>
+//  pdf/<dim1Value>/<dim2Value>/      → buildAllVariants
+// =============================================================================
+
+plugins {
+    id 'org.asciidoctor.jvm.pdf' version '4.0.2'
+}
+
+import org.asciidoctor.gradle.jvm.pdf.AsciidoctorPdfTask
+
+repositories {
+    mavenCentral()
+}
+
+// ── Configuration — EDIT THIS SECTION ONLY ────────────────────────────────────
+
+ext {
+    docsRoot  = file(project.findProperty('docsRoot') ?: '.')
+    outputDir = file(project.findProperty('outputDir') ?: 'pdf')
+
+    def pdfThemeFile = file("${rootDir}/resources/theme/hclt-theme.yml")
+    def fontsDir     = file("${rootDir}/resources/theme/fonts")
+
+    // ── Base Asciidoctor attributes (always applied) ───────────────────────
+    def attrs = [
+        'pdf-theme'          : pdfThemeFile.absolutePath.replace('\\', '/'),
+        'pdf-fontsdir'       : fontsDir.absolutePath.replace('\\', '/'),
+        'icons'              : 'font',
+        'source-highlighter' : 'rouge',
+    ]
+
+    // ── Variant dimensions ─────────────────────────────────────────────────
+    // ADD a new attribute  → add a new key/list entry
+    // REMOVE an attribute  → delete its line
+    // RENAME an attribute  → change the key (must match your .adoc attribute name)
+    // The FIRST value in each list is the default when none is passed via -P
+    variantDimensions = [
+        'audience' : ['restricted', 'nonrestricted'],
+        'device'   : ['ios', 'ts43', 'microsoft', 'google'],
+        'format'   : ['pdf', 'html'],
+    ]
+    // ── End of section you need to edit ───────────────────────────────────
+
+    // Pass only attributes explicitly provided via -P on the command line.
+    // If not provided, the .adoc file's own defaults (:audience: restricted@ etc.)
+    // are used as-is — Gradle does not override them.
+    variantDimensions.keySet().each { key ->
+        if (project.hasProperty(key)) {
+            attrs[key] = project.property(key)
+        }
+    }
+
+    commonAttributes = attrs
+}
+
+// ── AsciidoctorJ ──────────────────────────────────────────────────────────────
+
+asciidoctorj {
+    modules {
+        pdf.version = '2.3.10'
+    }
+}
+
+// ── Discover .adoc files ──────────────────────────────────────────────────────
+
+def adocFiles = fileTree(docsRoot) {
+    include '*.adoc', '*.asciidoc'
+    exclude '_*'                        // skip partials prefixed with _
+}.files.sort { it.name }
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+def safeName = { File f ->
+    f.name.replaceAll(/\.a(scii)?doc$/, '').replaceAll(/[^a-zA-Z0-9]/, '_')
+}
+
+def stripExt = { String name ->
+    name.replaceAll(/\.a(scii)?doc$/, '')
+}
+
+// Build a safe task-name segment from a dimension name+value pair
+// e.g. audience=restricted → 'audience_restricted'
+def dimSegment = { String dim, String val ->
+    "${dim}_${val.replaceAll(/[^a-zA-Z0-9]/, '_')}"
+}
+
+// ── Standard per-file tasks (respects -P overrides or .adoc defaults) ─────────
+
+adocFiles.each { adocFile ->
+    def name = safeName(adocFile)
+
+    tasks.register("asciidocPdf_${name}", AsciidoctorPdfTask) {
+        group       = 'Documentation (individual)'
+        description = "PDF: ${adocFile.name}"
+        sourceDir   = adocFile.parentFile
+        baseDirFollowsSourceDir()
+        sources     { include adocFile.name }
+        outputDir   = project.ext.outputDir
+        attributes(project.ext.commonAttributes)
+        outputs.upToDateWhen { false }
+    }
+}
+
+// ── Task: buildAllPdfs ────────────────────────────────────────────────────────
+
+tasks.register('buildAllPdfs') {
+    group       = 'Documentation'
+    description = 'Build PDFs for all .adoc files. Override with -P<attr>=<value>.'
+    doNotTrackState("Always rebuilds")
+    dependsOn adocFiles.collect { "asciidocPdf_${safeName(it)}" }
+    doLast {
+        def overrides = project.ext.variantDimensions.keySet()
+            .findAll  { project.hasProperty(it) }
+            .collect  { "${it}=${project.property(it)}" }
+            .join(', ')
+        def msg = overrides ? " [${overrides}]" : " [using .adoc defaults]"
+        logger.lifecycle("\n✅ Built ${adocFiles.size()} PDF(s)${msg} → ${outputDir}\n")
+    }
+}
+
+// ── Task: buildUpdatedPdfs ────────────────────────────────────────────────────
+
+def staleDocs = adocFiles.findAll { adocFile ->
+    def pdfFile = new File(outputDir, stripExt(adocFile.name) + '.pdf')
+    !pdfFile.exists() || adocFile.lastModified() > pdfFile.lastModified()
+}
+
+tasks.register('buildUpdatedPdfs') {
+    group       = 'Documentation'
+    description = 'Build PDFs only for files newer than their existing PDF.'
+    doNotTrackState("Timestamp-based staleness check")
+    if (staleDocs.isEmpty()) {
+        doLast { logger.lifecycle("\n✅ All PDFs are up-to-date. Nothing to build.\n") }
+    } else {
+        dependsOn staleDocs.collect { "asciidocPdf_${safeName(it)}" }
+        doLast { logger.lifecycle("\n✅ Built ${staleDocs.size()} PDF(s) → ${outputDir}\n") }
+    }
+}
+
+// ── Per-dimension tasks ───────────────────────────────────────────────────────
+// For each dimension (e.g. audience) and each value (e.g. restricted):
+//   - registers asciidocPdf_<file>_<dim>_<val> tasks
+//   - registers buildAll_<dim>_<val>  aggregate task
+// Then for each dimension:
+//   - registers buildAll_<dim>s  (builds all values of that dimension)
+
+project.ext.variantDimensions.each { dimName, dimValues ->
+
+    dimValues.each { dimValue ->
+        def seg = dimSegment(dimName, dimValue)
+
+        // Per-file tasks for this dim+value
+        adocFiles.each { adocFile ->
+            def name = safeName(adocFile)
+            tasks.register("asciidocPdf_${name}_${seg}", AsciidoctorPdfTask) {
+                group       = 'Documentation (variants)'
+                description = "PDF [${dimName}=${dimValue}]: ${adocFile.name}"
+                sourceDir   = adocFile.parentFile
+                baseDirFollowsSourceDir()
+                sources     { include adocFile.name }
+                outputDir   = new File(project.ext.outputDir, dimValue)
+                attributes(project.ext.commonAttributes + [(dimName): dimValue])
+                outputs.upToDateWhen { false }
+            }
+        }
+
+        // Aggregate: build all files for this dim+value
+        tasks.register("buildAll_${seg}") {
+            group       = 'Documentation'
+            description = "Build all PDFs with ${dimName}=${dimValue} → pdf/${dimValue}/"
+            dependsOn   adocFiles.collect { "asciidocPdf_${safeName(it)}_${seg}" }
+            doLast { logger.lifecycle("\n✅ PDFs [${dimName}=${dimValue}] → ${outputDir}/${dimValue}\n") }
+        }
+    }
+
+    // Aggregate: build ALL values of this dimension
+    tasks.register("buildAll_${dimName}s") {
+        group       = 'Documentation'
+        description = "Build all PDFs for every '${dimName}' value: ${dimValues.join(', ')}"
+        dependsOn   dimValues.collect { "buildAll_${dimSegment(dimName, it)}" }
+        doLast { logger.lifecycle("\n✅ All '${dimName}' variants built → ${outputDir}\n") }
+    }
+}
+
+// ── Task: buildAllVariants ────────────────────────────────────────────────────
+// Full matrix: every combination of every dimension's values.
+// Output: pdf/<dim1Value>/<dim2Value>/...
+
+def buildVariantCombinations
+buildVariantCombinations = { List<Map.Entry<String, List<String>>> dimensions, Map<String, String> current ->
+    if (dimensions.isEmpty()) {
+        // Leaf: register a task for this combination
+        def taskSuffix = current.collect { k, v -> dimSegment(k, v) }.join('_')
+        def pathParts  = current.values().toList()
+
+        adocFiles.each { adocFile ->
+            def name = safeName(adocFile)
+            tasks.register("asciidocPdf_${name}_${taskSuffix}", AsciidoctorPdfTask) {
+                group       = 'Documentation (full matrix)'
+                description = "PDF ${current}: ${adocFile.name}"
+                sourceDir   = adocFile.parentFile
+                baseDirFollowsSourceDir()
+                sources     { include adocFile.name }
+                outputDir   = pathParts.inject(project.ext.outputDir) { dir, part -> new File(dir, part) }
+                attributes(project.ext.commonAttributes + current)
+                outputs.upToDateWhen { false }
+            }
+        }
+
+        tasks.register("buildAllVariant_${taskSuffix}") {
+            group       = 'Documentation (full matrix)'
+            description = "Build all PDFs for ${current}"
+            dependsOn   adocFiles.collect { "asciidocPdf_${safeName(it)}_${taskSuffix}" }
+        }
+
+        return ["buildAllVariant_${taskSuffix}"]
+    }
+
+    def head = dimensions[0]
+    def tail = dimensions.tail()
+    return head.value.collectMany { val ->
+        buildVariantCombinations(tail, current + [(head.key): val])
+    }
+}
+
+def variantLeafTasks = buildVariantCombinations(
+    project.ext.variantDimensions.entrySet().toList(), [:]
+)
+
+tasks.register('buildAllVariants') {
+    group       = 'Documentation'
+    description = 'Build PDFs for every combination of all variant dimensions.'
+    dependsOn   variantLeafTasks
+    doLast { logger.lifecycle("\n✅ Full variant matrix built → ${outputDir}\n") }
+}
+
+// ── Task: buildPdf (single file) ──────────────────────────────────────────────
+
+if (project.hasProperty('doc')) {
+    def singleDoc = file(project.property('doc'))
+
+    tasks.register('buildPdf', AsciidoctorPdfTask) {
+        group       = 'Documentation'
+        description = "PDF: ${singleDoc.name}"
+        sourceDir   = singleDoc.parentFile
+        baseDirFollowsSourceDir()
+        sources     { include singleDoc.name }
+        outputDir   = project.ext.outputDir
+        attributes(project.ext.commonAttributes)
+    }
+} else {
+    tasks.register('buildPdf') {
+        group       = 'Documentation'
+        description = 'Convert a single file to PDF. Pass -Pdoc=<path>.'
+        doNotTrackState("Placeholder")
+        doLast {
+            throw new GradleException(
+                "No file specified. Run with: .\\gradlew.bat buildPdf -Pdoc=my-document.adoc"
+            )
+        }
+    }
+}
+
+// ── Task: listDocs ────────────────────────────────────────────────────────────
+
+tasks.register('listDocs') {
+    group       = 'Documentation'
+    description = 'Lists all .adoc files and PDF build status.'
+    doNotTrackState("Informational only")
+    doLast {
+        if (adocFiles.isEmpty()) {
+            logger.lifecycle("No .adoc files found under: ${docsRoot}")
+            return
+        }
+
+        logger.lifecycle("\n${adocFiles.size()} AsciiDoc file(s) under ${docsRoot}:\n")
+
+        adocFiles.each { adocFile ->
+            // Default output
+            def pdfFile = new File(outputDir, stripExt(adocFile.name) + '.pdf')
+            def status  = pdfFile.exists()
+                ? (adocFile.lastModified() > pdfFile.lastModified() ? '⚠️  STALE     ' : '✅ up-to-date ')
+                : '❌ missing    '
+            logger.lifecycle("  ${status}  ${adocFile.name}")
+
+            // Per-dimension variant outputs
+            project.ext.variantDimensions.each { dimName, dimValues ->
+                dimValues.each { dimValue ->
+                    def variantPdf = new File(new File(outputDir, dimValue), stripExt(adocFile.name) + '.pdf')
+                    if (variantPdf.exists()) {
+                        def vs = adocFile.lastModified() > variantPdf.lastModified() ? '⚠️  STALE     ' : '✅ up-to-date '
+                        logger.lifecycle("  ${vs}  [${dimName}=${dimValue}] ${adocFile.name}")
+                    }
+                }
+            }
+        }
+        logger.lifecycle('')
+        logger.lifecycle("  Available variant tasks:")
+        project.ext.variantDimensions.each { dimName, dimValues ->
+            logger.lifecycle("    buildAll_${dimName}s  (values: ${dimValues.join(', ')})")
+            dimValues.each { dimValue ->
+                logger.lifecycle("      buildAll_${dimSegment(dimName, dimValue)}")
+            }
+        }
+        logger.lifecycle("    buildAllVariants  (full matrix)")
+        logger.lifecycle('')
+    }
+}

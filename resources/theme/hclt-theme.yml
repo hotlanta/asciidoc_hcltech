@@ -1,0 +1,131 @@
+# This theme tries to produce documents that looks like HCLTech User Documentation templates from DITA.
+
+
+brand: 
+  white_color: #FFFFFF
+  black_color: #000000
+  grey1_color: #C6C9CA
+  blue_color: #0F5FDC
+
+font:
+  catalog:
+    HCLTechRoobert:
+      normal: HCLTechRoobert-Light.ttf
+      italic: HCLTechRoobert-LightItalic.ttf
+      bold: HCLTechRoobert-Heavy.ttf
+      bold_italic: HCLTechRoobert-HeavyItalic.ttf
+    DejaVuSans:
+      normal: DejaVuSans.ttf
+      bold: DejaVuSans-Bold.ttf
+      italic: DejaVuSans-Oblique.ttf
+      bold_italic: DejaVuSans-BoldOblique.ttf
+    # Arial for list markers (nested bullets)
+    ListFallback:
+      normal: arial.ttf 
+      bold: arialbd.ttf
+      italic: ariali.ttf
+      bold_italic: arialbi.ttf  
+    UnicodeFallback:
+      normal: DejaVuSans.ttf
+      bold: DejaVuSans-Bold.ttf
+      italic: DejaVuSans-Oblique.ttf
+      bold_italic: DejaVuSans-BoldOblique.ttf          
+  fallbacks: [HCLTechRoobert, DejaVuSans, UnicodeFallback, ListFallback]
+
+listing:                              # for ---- blocks
+  font-family: UnicodeFallback
+
+codespan:                              # for inline `monospace`
+  font-family: UnicodeFallback
+      
+title_page:
+  align: left
+  background_image: image:hcltech_title.jpg[fit=none,pdfwidth=100%,position=top]
+  title_top: 12%
+  title_font_size: 32
+  title_font_style: bold
+  subtitle_font_size: 20
+  #subtitle_line_height: 2
+
+page:
+  layout: portrait
+  #margin: [2.3in, 0.51in, 1.2in, 1.75in] 
+  margin: [0.75in, 0.5in, 0.75in, 0.5in]
+  size: A4
+
+base:
+  font_color: #333333
+  font-family: HCLTechRoobert
+  font_size: 11
+  line_height_length: 17
+  line_height: $base_line_height_length / $base_font_size
+
+vertical_rhythm: $base_line_height_length
+
+heading:
+  font_color: #262626
+  font_size: 24
+  font_style: bold
+  line_height: 1.2
+  margin_bottom: $vertical_rhythm
+
+link:
+  font_color: $brand_blue_color
+
+#outline_list:
+list:
+  indent: $base_font_size * 1.5
+  marker:
+    font-family: ListFallback
+
+header:
+  height: 0.75in
+  line_height: 1
+  recto:
+    left:
+#    content: '{section-or-chapter-title} | *{page-number}*'
+       content: |
+         {document-title} +
+         {chapter-title}      
+    right:
+       content: '*{page-number}*'   
+  verso:
+    left:
+       content: $header_recto_left_content
+    right:
+       content: $header_recto_right_content
+
+footer:
+  height: 0.75in
+  line_height: 1
+  image-vertical-align: 2 
+  recto:
+    right:
+      content: image:HCLTechLogo.svg[pdfwidth=70pt]
+  verso:
+    right:
+      content: $footer_recto_right_content
+
+table:
+    border_color: $brand_blue_color
+    head_font_style: bold
+    head_border-bottom-color: $brand_blue_color
+    cell-padding: [5, 6, 2, 4]
+#    head_background_color: $brand_grey1_color
+#    header_cell_background_color: $brand_grey1_color
+ 
+example:
+    border_color: $brand_blue_color
+
+caption:
+  font_style: bold
+
+code:
+    border_color: $brand_grey1_color
+    background_color: $brand_grey1_color
+    font-family: UnicodeFallback
+    font-size: $base_font_size * 0.95
+    line-height: 1.15
+    
+admonition:
+    column_rule_color: $brand_blue_color
