@@ -154,14 +154,14 @@ Add the following entries *individually*:
 
 [source,text]
 ----
+-B
+${workspaceFolder}
 -a
 pdf-theme=D:/path/to/asciidoc_hcltech/theme/hcltech-theme.yml
-
 -a
 pdf-fontsdir=D:/path/to/asciidoc_hcltech/fonts
-
 -r
-asciidoctor-pdf
+asciidoctor-lists
 ----
 
 <1> Each `-a` must be a separate entry.
@@ -179,17 +179,15 @@ IMPORTANT: Do not combine arguments like:
 
 [source,text]
 ----
+-B
+${workspaceFolder}
 -a
 pdf-theme=D:/hotlanta_git/asciidoc_hcltech/theme/hcltech-theme.yml
-
 -a
 pdf-fontsdir=D:/hotlanta_git/asciidoc_hcltech/fonts
-
 -r
-asciidoctor-pdf
+asciidoctor-lists
 ----
-
----
 
 === Step 5: Verify configuration
 

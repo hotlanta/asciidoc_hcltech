@@ -1,5 +1,6 @@
 # This theme tries to produce documents that looks like HCLTech User Documentation templates from DITA.
 
+extends: base
 
 brand: 
   white_color: #FFFFFF
@@ -9,6 +10,7 @@ brand:
 
 font:
   catalog:
+    merge: true
     HCLTechRoobert:
       normal: HCLTechRoobert-Light.ttf
       italic: HCLTechRoobert-LightItalic.ttf
@@ -30,7 +32,7 @@ font:
       bold: DejaVuSans-Bold.ttf
       italic: DejaVuSans-Oblique.ttf
       bold_italic: DejaVuSans-BoldOblique.ttf          
-  fallbacks: [HCLTechRoobert, DejaVuSans, UnicodeFallback, ListFallback]
+  fallbacks: [DejaVuSans, UnicodeFallback, ListFallback]
 
 listing:                              # for ---- blocks
   font-family: UnicodeFallback
