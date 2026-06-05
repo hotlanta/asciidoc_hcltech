@@ -1,7 +1,5 @@
 # This theme tries to produce documents that looks like HCLTech User Documentation templates from DITA.
 
-extends: base
-
 brand: 
   white_color: #FFFFFF
   black_color: #000000
@@ -10,7 +8,6 @@ brand:
 
 font:
   catalog:
-    merge: true
     HCLTechRoobert:
       normal: HCLTechRoobert-Light.ttf
       italic: HCLTechRoobert-LightItalic.ttf
