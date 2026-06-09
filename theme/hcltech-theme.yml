@@ -25,10 +25,10 @@ font:
       italic: ariali.ttf
       bold_italic: arialbi.ttf  
     UnicodeFallback:
-      normal: DejaVuSans.ttf
-      bold: DejaVuSans-Bold.ttf
-      italic: DejaVuSans-Oblique.ttf
-      bold_italic: DejaVuSans-BoldOblique.ttf          
+      normal: cour.ttf
+      bold: courbd.ttf
+      italic: couri.ttf
+      bold_italic: courbi.ttf         
   fallbacks: [DejaVuSans, UnicodeFallback, ListFallback]
 
 listing:                              # for ---- blocks
@@ -124,7 +124,7 @@ code:
     background_color: $brand_grey1_color
     font-family: UnicodeFallback
     font-size: $base_font_size * 0.95
-    line-height: 1.15
+    line-height: 1.5
     
 admonition:
     column_rule_color: $brand_blue_color
