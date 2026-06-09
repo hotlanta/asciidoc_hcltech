@@ -3,7 +3,7 @@
 brand: 
   white_color: #FFFFFF
   black_color: #000000
-  grey1_color: #C6C9CA
+  grey1_color: #EEEEEE
   blue_color: #0F5FDC
 
 font:
@@ -28,9 +28,9 @@ font:
       normal: cour.ttf
       bold: courbd.ttf
       italic: couri.ttf
-      bold_italic: courbi.ttf         
+      bold_italic: courbi.ttf          
   fallbacks: [DejaVuSans, UnicodeFallback, ListFallback]
-
+ 
 listing:                              # for ---- blocks
   font-family: UnicodeFallback
 
@@ -43,8 +43,12 @@ title_page:
   title_top: 12%
   title_font_size: 32
   title_font_style: bold
+  title_line_height: 0.8
+
   subtitle_font_size: 20
-  #subtitle_line_height: 2
+  subtitle_line_height: 1.40
+  revision:
+    font-size: 20
 
 page:
   layout: portrait
@@ -61,6 +65,9 @@ base:
 
 vertical_rhythm: $base_line_height_length
 
+prose:
+  margin_bottom: $vertical_rhythm * 0.65
+
 heading:
   font_color: #262626
   font_size: 24
@@ -71,7 +78,7 @@ heading:
 link:
   font_color: $brand_blue_color
 
-#outline_list:
+# outline_list:
 list:
   indent: $base_font_size * 1.5
   marker:
@@ -123,7 +130,7 @@ code:
     border_color: $brand_grey1_color
     background_color: $brand_grey1_color
     font-family: UnicodeFallback
-    font-size: $base_font_size * 0.95
+    font-size: $base_font_size * 0.9
     line-height: 1.5
     
 admonition:
