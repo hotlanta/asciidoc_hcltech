@@ -78,6 +78,7 @@ heading:
   h2_font_size: 24
   h3_font_size: 16
   h4_font_size: 14
+  h5_font_size: 12
 
 link:
   font_color: $brand_blue_color
