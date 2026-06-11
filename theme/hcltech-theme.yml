@@ -145,3 +145,6 @@ description_list:
   term_font_style: bold
   term_spacing: 4
   description_indent: 24
+
+menu:
+  font_style: bold
