@@ -79,6 +79,9 @@ heading:
   h3_font_size: 16
   h4_font_size: 14
   h5_font_size: 12
+  h2_border_width: [2, 0, 2, 0]
+  h2_border_color: $brand_blue_color
+  h2_padding: [$vertical_rhythm * 0.5, 0, $vertical_rhythm * 0.5, 0]
 
 link:
   font_color: $brand_blue_color
