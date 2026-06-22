@@ -83,8 +83,18 @@ heading:
   h2_border_color: $brand_blue_color
   h2_padding: [$vertical_rhythm * 0.5, 0, $vertical_rhythm * 0.5, 0]
 
+toc:
+  h1_font_style: bold
+  h2_font_style: bold
+  h3_font_style: normal
+  h4_font_style: normal
+  h5_font_style: normal
+  indent: 20
+
 link:
   font_color: $brand_blue_color
+  text_decoration: underline
+  text_decoration_color: $brand_blue_color
 
 # outline_list:
 list:
@@ -102,7 +112,7 @@ header:
          {document-title} +
          {chapter-title}      
     right:
-       content: '*{page-number}*'   
+       content: 'Page {page-number}'   
   verso:
     left:
        content: $header_recto_left_content

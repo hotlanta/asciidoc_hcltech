@@ -1,10 +1,9 @@
 # This theme tries to produce documents that looks like HCLTech User Documentation templates from DITA.
 
-
 brand: 
   white_color: #FFFFFF
   black_color: #000000
-  grey1_color: #C6C9CA
+  grey1_color: #EEEEEE
   blue_color: #0F5FDC
 
 font:
@@ -26,12 +25,12 @@ font:
       italic: ariali.ttf
       bold_italic: arialbi.ttf  
     UnicodeFallback:
-      normal: DejaVuSans.ttf
-      bold: DejaVuSans-Bold.ttf
-      italic: DejaVuSans-Oblique.ttf
-      bold_italic: DejaVuSans-BoldOblique.ttf          
-  fallbacks: [HCLTechRoobert, DejaVuSans, UnicodeFallback, ListFallback]
-
+      normal: cour.ttf
+      bold: courbd.ttf
+      italic: couri.ttf
+      bold_italic: courbi.ttf          
+  fallbacks: [DejaVuSans, UnicodeFallback, ListFallback]
+ 
 listing:                              # for ---- blocks
   font-family: UnicodeFallback
 
@@ -44,8 +43,12 @@ title_page:
   title_top: 12%
   title_font_size: 32
   title_font_style: bold
+  title_line_height: 0.8
+
   subtitle_font_size: 20
-  #subtitle_line_height: 2
+  subtitle_line_height: 1.40
+  revision:
+    font-size: 20
 
 page:
   layout: portrait
@@ -56,23 +59,44 @@ page:
 base:
   font_color: #333333
   font-family: HCLTechRoobert
-  font_size: 11
-  line_height_length: 17
+  font_size: 10
+  line_height_length: 12
   line_height: $base_line_height_length / $base_font_size
 
 vertical_rhythm: $base_line_height_length
 
+prose:
+  margin_bottom: $vertical_rhythm * 0.65
+
 heading:
   font_color: #262626
-  font_size: 24
+  #font_size: 16
   font_style: bold
   line_height: 1.2
-  margin_bottom: $vertical_rhythm
+  margin_bottom: $vertical_rhythm * 0.5
+  h1_font_size: 24
+  h2_font_size: 24
+  h3_font_size: 16
+  h4_font_size: 14
+  h5_font_size: 12
+  h2_border_width: [2, 0, 2, 0]
+  h2_border_color: $brand_blue_color
+  h2_padding: [$vertical_rhythm * 0.5, 0, $vertical_rhythm * 0.5, 0]
+
+toc:
+  h1_font_style: bold
+  h2_font_style: bold
+  h3_font_style: normal
+  h4_font_style: normal
+  h5_font_style: normal
+  indent: 20
 
 link:
   font_color: $brand_blue_color
+  text_decoration: underline
+  text_decoration_color: $brand_blue_color
 
-#outline_list:
+# outline_list:
 list:
   indent: $base_font_size * 1.5
   marker:
@@ -88,7 +112,7 @@ header:
          {document-title} +
          {chapter-title}      
     right:
-       content: '*{page-number}*'   
+       content: 'Page {page-number}'   
   verso:
     left:
        content: $header_recto_left_content
@@ -124,8 +148,16 @@ code:
     border_color: $brand_grey1_color
     background_color: $brand_grey1_color
     font-family: UnicodeFallback
-    font-size: $base_font_size * 0.95
-    line-height: 1.15
+    font-size: $base_font_size * 0.9
+    line-height: 1.5
     
 admonition:
     column_rule_color: $brand_blue_color
+
+description_list:
+  term_font_style: bold
+  term_spacing: 4
+  description_indent: 24
+
+menu:
+  font_style: bold
