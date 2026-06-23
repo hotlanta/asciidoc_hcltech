@@ -74,9 +74,9 @@ heading:
   font_style: bold
   line_height: 1.2
   margin_bottom: $vertical_rhythm * 0.5
-  margin-top: $vertical_rhythm * 0.75   # default for all headings
-  h3-margin-top: $vertical_rhythm * 1.5  # more space above h3
-  h4-margin-top: $vertical_rhythm * 1.25
+  h3-margin-top: $vertical_rhythm  * 0.5 # more space above h3
+  h4-margin-top: $vertical_rhythm * 1.2
+  h5-margin-top: $vertical_rhythm * 1.2
   h1_font_size: 24
   h2_font_size: 24
   h3_font_size: 16
